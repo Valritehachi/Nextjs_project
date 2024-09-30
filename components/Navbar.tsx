@@ -32,7 +32,6 @@ const Navbar: React.FC = () => {
 
         {/* Right Section: Log In and Sign Up Buttons */}
         <Box className="flex items-center space-x-4">
-          <Button sx={{ color: 'black' }}>Log in</Button>
           <Link href="/login" passHref>
             <Button
             sx={{
