@@ -37,19 +37,3 @@ export default function Page() {
     </div>
   );
 }
-
-
-
-//   return (
-//     <div>
-//       {/* Navbar at the top */}
-//       <Navbar />
-
-//       {/* Page content below the Navbar */}
-//       <div className="flex items-center justify-center h-screen">
-//         <Button text="Click Me" onClick={handleClick} />
-//         <MaterialButton text="Click Me Now" onClick={handleClick} />
-//       </div>
-//     </div>
-//   );
-// }

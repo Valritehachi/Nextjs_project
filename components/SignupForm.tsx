@@ -10,7 +10,6 @@ const Signup = () => {
   };
 
   return (
-    
     <Box
         component="form"
         onSubmit={handleSubmit}
@@ -52,7 +51,7 @@ const Signup = () => {
             />
         </Box>
         <TextField
-            label="Email address"
+            label="Email Address"
             fullWidth
             required
             margin="normal"
