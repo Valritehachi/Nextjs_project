@@ -6,41 +6,41 @@ import Link from 'next/link';
 
 const Navbar: React.FC = () => {
   return (
-    <AppBar position="static" elevation={0} sx={{ backgroundColor: '#f5f5f5', borderBottom: '1px solid #e0e0e0' }}>
+    <AppBar position="static" elevation={0} sx={{ backgroundColor: 'white', borderBottom: '1px solid #e0e0e0' }}>
       <Toolbar className="flex justify-between">
-        {/* Logo */}
-        <Typography 
-          variant="h6" 
-          component="div" 
-          sx={{ flexGrow: 1, color: 'black', fontWeight: 'bold', paddingLeft: '16px' }}
-        >
-          PlatePlan
-        </Typography>
+        {/* Left Section: Logo and Navigation Links */}
+        <Box className="flex items-center space-x-4">
+          {/* Logo */}
+          <Typography 
+            variant="h5" 
+            component="div" 
+            sx={{ color: 'black', fontWeight: 'bold' }}
+          >
+            PlatePlan
+          </Typography>
 
-        {/* Navigation Links */}
-        <Box className="hidden md:flex space-x-4">
-          <Link href="/" passHref>
-            <Button sx={{ color: '#000', fontWeight: '500' }}>Home</Button>
-          </Link>
-          <Link href="/about" passHref>
-            <Button sx={{ color: '#000', fontWeight: '500' }}>About us</Button>
-          </Link>
+          {/* Navigation Links */}
+          <Box className="flex space-x-6">
+            <Link href="/" passHref>
+              <Button sx={{ color: 'blue', fontWeight: 'bold' }}>Home</Button>
+            </Link>
+            <Link href="/about" passHref>
+              <Button sx={{ color: 'black' }}>About us</Button>
+            </Link>
+          </Box>
         </Box>
 
-        {/* Log In and Sign Up Buttons */}
-        <Box className="flex items-center space-x-3" sx={{ paddingRight: '16px' }}>
-          <Button sx={{ color: '#000' }}>Log in</Button>
-          {/* Sign up Button with Link */}
+        {/* Right Section: Log In and Sign Up Buttons */}
+        <Box className="flex items-center space-x-4">
+          <Button sx={{ color: 'black' }}>Log in</Button>
           <Link href="/signup" passHref>
             <Button
               variant="contained"
               sx={{
-                backgroundColor: '#1a73e8', // Adjusted color to blue
+                backgroundColor: 'blue',
                 color: 'white',
-                borderRadius: '20px', // Rounded button
-                paddingLeft: '16px',
-                paddingRight: '16px',
-                '&:hover': { backgroundColor: '#1565c0' },
+                borderRadius: '8px',
+                '&:hover': { backgroundColor: 'darkblue' },
               }}
             >
               Sign up
