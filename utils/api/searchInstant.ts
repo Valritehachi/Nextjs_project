@@ -1,6 +1,5 @@
 import type { SearchInstantType } from "../../types/api/searchInstant";
 import type { SearchInstantOptionsType } from "../../types/api/searchInstantOptions";
-import axios from "axios";
 
 export const searchInstant = async (
   query: string,
@@ -13,18 +12,30 @@ export const searchInstant = async (
       common,
       branded,
     };
-    const headers = {
-      "Content-Type": "application/json",
-      "x-app-id": process.env.X_APP_ID!,
-      "x-app-key": process.env.X_APP_KEY!,
-      "x-remote-user-id": 0,
-    };
-    const url = process.env.BASE_URL! + "/search/instant";
-    const data = await axios.get(url, {
-      headers,
-      params,
+    const finalParams = new URLSearchParams();
+    for (const key in params) {
+      finalParams.append(
+        key,
+        String(params[key as keyof SearchInstantOptionsType])
+      );
+    }
+    const finalParamsString = finalParams.toString();
+
+    const url = process.env.BASE_URL! + "/search/instant?" + finalParamsString;
+    const res = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "x-app-id": process.env.X_APP_ID!,
+        "x-app-key": process.env.X_APP_KEY!,
+        "x-remote-user-id": "0",
+      },
+      next: {
+        revalidate: 0,
+      },
     });
-    return data.data as SearchInstantType;
+    const data = (await res.json()) as SearchInstantType;
+    return data;
   } catch (error) {
     throw error;
   }
