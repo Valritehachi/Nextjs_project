@@ -2,12 +2,19 @@
 
 import React from 'react';
 import { Box, TextField, Button, Typography } from '@mui/material';
+import { useRouter } from 'next/navigation'; 
+
 
 const Signup = () => {
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-    console.log('Form submitted');
-  };
+    const router = useRouter(); // Initialize the router
+  
+    const handleSubmit = (event: React.FormEvent) => {
+      event.preventDefault();
+      console.log('Form submitted');
+  
+      // Navigate to the body composition page after form submission
+      router.push('/bodycomposition');
+    };
 
   return (
     <Box

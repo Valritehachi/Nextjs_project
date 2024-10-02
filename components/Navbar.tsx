@@ -21,10 +21,10 @@ const Navbar: React.FC = () => {
 
           {/* Navigation Links */}
           <Box className="flex space-x-6">
-            <Link href="/" passHref>
+            <Link href="/s" passHref>
               <Button sx={{ color: 'blue', fontWeight: 'bold' }}>Home</Button>
             </Link>
-            <Link href="/about" passHref>
+            <Link href="" passHref>
               <Button sx={{ color: 'black' }}>About us</Button>
             </Link>
           </Box>
