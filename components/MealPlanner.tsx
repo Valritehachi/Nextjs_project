@@ -5,7 +5,7 @@ interface MealPlannerProps {
 }
 
 const MealPlanner: React.FC<MealPlannerProps> = ({ title }) => {
-  const [meals, setMeals] = useState<string[]>(['Corn Flakes', 'Banana', 'Milk']);
+  const [meals, setMeals] = useState<string[]>([]);
 
   const clearMeals = () => {
     setMeals([]);

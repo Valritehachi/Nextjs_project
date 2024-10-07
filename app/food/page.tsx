@@ -15,9 +15,9 @@ const FoodPage = () => {
         
         <div className="flex justify-center space-x-8">
           {/* Meal Columns */}
-          <MealPlanner title="BREAKFAST" meals={['Corn Flakes', 'Banana', 'Milk']} />
-          <MealPlanner title="LUNCH" meals={[]} />
-          <MealPlanner title="DINNER" meals={[]} />
+          <MealPlanner title="BREAKFAST" />
+          <MealPlanner title="LUNCH" />
+          <MealPlanner title="DINNER" />
         </div>
       </div>
     </div>
