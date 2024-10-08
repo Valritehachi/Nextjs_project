@@ -1,9 +1,8 @@
 "use client";
 
-import React from 'react';
-import BodyCompositionForm from '../../components/BodyComposition';
-import Navbar from '../../components/Navbar';
-
+import React from "react";
+import BodyCompositionForm from "./BodyComposition";
+import Navbar from "../../components/Navbar";
 
 export default function BodyCompositionPage() {
   return (
@@ -17,4 +16,3 @@ export default function BodyCompositionPage() {
     </div>
   );
 }
-

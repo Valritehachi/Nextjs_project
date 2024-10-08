@@ -16,6 +16,33 @@ export const ExerciseOptionsDescription = {
   "Extremely Active": "Very intense exercise daily or highly physical job",
 };
 
+export const ExerciseOptionsDescriptionSelect = [
+  {
+    value: "BMR",
+    label: "Basal Metabolic Rate",
+  },
+  {
+    value: "Sedentary",
+    label: "Exercise 1-3 times per week",
+  },
+  {
+    value: "Lightly Active",
+    label: "Exercise 4-5 times per week",
+  },
+  {
+    value: "Moderately Active",
+    label: "Daily exercise or intense exercise 3-4 times per week",
+  },
+  {
+    value: "Very Active",
+    label: "Intense exercise 6-7 times per week",
+  },
+  {
+    value: "Extremely Active",
+    label: "Very intense exercise daily or highly physical job",
+  },
+];
+
 export const WeightLossOptionData = {
   maintain: 0,
   mild: 0.25,
