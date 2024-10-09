@@ -5,12 +5,9 @@ import Navbar from "@/components/Navbar";
 
 export default function LoginPage() {
   return (
-    <div className="h-screen">
+    <div className="h-dvh bg-accent flex flex-col">
       <Navbar />
-
-      <section>
-        <LoginForm />
-      </section>
+      <LoginForm />
     </div>
   );
 }

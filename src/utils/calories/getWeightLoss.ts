@@ -19,5 +19,5 @@ export const getWeightLoss = (BMR: number) => {
     extreme: Math.round(BMR + extremeCalories),
   };
 
-  return { WeightLossOptions, WeightGainOptions };
+  return { WeightLossOptions, WeightGainOptions, maintain: BMR };
 };

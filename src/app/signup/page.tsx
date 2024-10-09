@@ -5,12 +5,9 @@ import SignUpForm from "@/components/SignUpForm";
 
 export default function SignupPage() {
   return (
-    <div className="h-screen">
+    <div className="h-dvh bg-accent flex flex-col">
       <Navbar />
-
-      <section>
-        <SignUpForm />
-      </section>
+      <SignUpForm />
     </div>
   );
 }

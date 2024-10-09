@@ -2,8 +2,10 @@ import { getWeightLoss } from "./getWeightLoss";
 
 describe("getWeightLoss", () => {
   it("Return the correct weight loss given the calories input", () => {
-    const result = getWeightLoss(1500);
+    const calories = 1500;
+    const result = getWeightLoss(calories);
     const expected = {
+      maintain: calories,
       WeightGainOptions: {
         extreme: 2602,
         mild: 1776,
@@ -19,8 +21,10 @@ describe("getWeightLoss", () => {
   });
 
   it("Return the correct weight loss given the calories input", () => {
-    const result = getWeightLoss(2000);
+    const calories = 2000;
+    const result = getWeightLoss(calories);
     const expected = {
+      maintain: calories,
       WeightGainOptions: {
         extreme: 3102,
         mild: 2276,

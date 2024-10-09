@@ -35,59 +35,64 @@ const LoginForm: React.FC = () => {
   };
 
   return (
-    <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col gap-2 max-w-full container mx-auto p-2"
-      >
-        <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl text-center">
-          Welcome Back!
-        </h1>
-
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Email</FormLabel>
-              <FormControl>
-                <Input {...field} />
-              </FormControl>
-              <FormDescription>This is your email.</FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Password</FormLabel>
-              <FormControl>
-                <Input type="password" {...field} />
-              </FormControl>
-              <FormDescription>This is your password.</FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <div className="flex justify-between">
-          <Button
-            variant={"link"}
-            type="submit"
-            disabled={form.formState.isSubmitting}
+    <div className=" container mx-auto flex flex-col justify-center items-center h-full">
+      <div className="bg-muted rounded-md p-8 ring ">
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="flex flex-col gap-2 p-2"
           >
-            Forgot your password?
-          </Button>
-          <Button type="submit" disabled={form.formState.isSubmitting}>
-            Login
-          </Button>
-        </div>
-      </form>
-    </Form>
+            <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl text-center pb-4">
+              Welcome Back!
+            </h1>
+
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input {...field} />
+                  </FormControl>
+                  <FormDescription>This is your email.</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Password</FormLabel>
+                  <FormControl>
+                    <Input type="password" {...field} />
+                  </FormControl>
+                  <FormDescription>This is your password.</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <div className="flex justify-between">
+              <Button
+                variant={"link"}
+                type="submit"
+                className="text-accent-foreground justify-start"
+                disabled={form.formState.isSubmitting}
+              >
+                Forgot your password?
+              </Button>
+              <Button type="submit" disabled={form.formState.isSubmitting}>
+                Login
+              </Button>
+            </div>
+          </form>
+        </Form>
+      </div>
+    </div>
   );
 };
 
