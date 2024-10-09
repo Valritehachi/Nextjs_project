@@ -30,7 +30,6 @@ import {
   getCalories,
   type getCaloriesType,
 } from "@/utils/calories/getCalories";
-import { ModeToggle } from "@/components/mode-toggle";
 
 const bodyCompositionSchema = z.object({
   gender: z.enum(["male", "female"], { message: "Please select one" }),
@@ -78,7 +77,6 @@ const BodyCompositionPage: React.FC = () => {
 
   return (
     <Form {...form}>
-      <ModeToggle />
       <form
         onSubmit={form.handleSubmit(onSubmit)}
         className="flex flex-col gap-2 max-w-full container mx-auto p-2"
