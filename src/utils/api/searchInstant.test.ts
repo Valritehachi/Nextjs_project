@@ -11,9 +11,9 @@ describe("searchInstant", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    process.env.X_APP_ID = "test-app-id";
-    process.env.X_APP_KEY = "test-app-key";
-    process.env.BASE_URL = "https://api.example.com";
+    process.env.NEXT_PUBLIC_X_APP_ID = "test-app-id";
+    process.env.NEXT_PUBLIC_X_APP_KEY = "test-app-key";
+    process.env.NEXT_PUBLIC_BASE_URL = "https://api.example.com";
   });
 
   it("should return data on successful API call searchInstant", async () => {

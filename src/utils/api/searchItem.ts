@@ -15,13 +15,14 @@ export const searchItem = async (query: string): Promise<SearchItemType> => {
     }
     const finalParamsString = finalParams.toString();
 
-    const url = process.env.BASE_URL! + "/search/item?" + finalParamsString;
+    const url =
+      process.env.NEXT_PUBLIC_BASE_URL! + "/search/item?" + finalParamsString;
     const res = await fetch(url, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "x-app-id": process.env.X_APP_ID!,
-        "x-app-key": process.env.X_APP_KEY!,
+        "x-app-id": process.env.NEXT_PUBLIC_X_APP_ID!,
+        "x-app-key": process.env.NEXT_PUBLIC_X_APP_KEY!,
         "x-remote-user-id": "0",
       },
       next: {

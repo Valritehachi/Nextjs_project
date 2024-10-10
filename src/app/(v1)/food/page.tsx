@@ -1,16 +1,32 @@
-import MealPlanner from "@/components/MealPlanner";
+import AddFood from "./AddFood";
+import SelectFood from "./SelectFood";
+import {
+  Dialog,
+  DialogTrigger,
+  DialogFooter,
+  DialogContent,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import FoodType from "./FoodType";
 
 const FoodPage = () => {
   return (
-    <div className=" flex flex-col gap-2 p-2 h-full">
-      <h2 className="scroll-m-20 border-b text-3xl font-semibold tracking-tight text-center">
-        Meal Columns
-      </h2>
-      <div className="grid grid-cols-3 gap-2 h-full overflow-y-auto">
-        <div className="h-full max-h-full overflow-auto ">
-          <MealPlanner title="BREAKFAST" />
+    <div className="flex h-full flex-col gap-2 p-2 min-h-full">
+      <Dialog>
+        <DialogTrigger asChild>
+          <Button variant="outline">Add food</Button>
+        </DialogTrigger>
+        <div className="flex h-full w-full flex-col gap-2 p-2">
+          <DialogContent className="w-full">
+            <AddFood />
+            <SelectFood />
+            <FoodType />
+            <DialogFooter>
+              <Button type="submit">Save changes</Button>
+            </DialogFooter>
+          </DialogContent>
         </div>
-      </div>
+      </Dialog>
     </div>
   );
 };
