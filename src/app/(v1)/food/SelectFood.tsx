@@ -10,30 +10,24 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Label } from "@/components/ui/label";
 import { searchNaturalNutrients } from "@/utils/api/searchNaturalNutrients";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { Input } from "@/components/ui/input";
 import { FormEvent } from "react";
-import {
-  setCurrentAlternative,
-  setCurrentCalories,
-  setCurrentQuantity,
-} from "@/store/foodPage/foodPageSlice";
+
+import useFood from "@/store/foodPage/useFood";
+import useFoodActions from "@/store/foodPage/useFoodActions";
+import useHandleSelectChange from "@/store/foodPage/useCalculateCalories";
 
 const SelectFood = () => {
-  const currentFood = useAppSelector((state) => state.foodPage.currentFood);
-  const currentQuantity = useAppSelector(
-    (state) => state.foodPage.currentQuantity
-  );
-  const currentCalories = useAppSelector(
-    (state) => state.foodPage.currentCalories
-  );
-  const currentAlternative = useAppSelector(
-    (state) => state.foodPage.currentAltnative
-  );
-  const dispatch = useAppDispatch();
+  const { currentFood, currentQuantity, currentCalories, currentAlternative } =
+    useFood();
+
+  const {
+    updateCurrentQuantity,
+    updateCurrentCalories,
+    updateCurrentAlternative,
+    updateTotalCalories,
+  } = useFoodActions();
 
   const searchNaturalData = useQuery({
     queryKey: ["food", currentFood],
@@ -44,34 +38,10 @@ const SelectFood = () => {
     refetchInterval: false,
   });
 
-  const handleSelectChange = (value: string) => {
-    dispatch(setCurrentAlternative(value));
-
-    if (!searchNaturalData.data?.foods) return;
-    const selectedFood = searchNaturalData.data?.foods[0].alt_measures?.find(
-      (item) => item.measure === currentAlternative
-    );
-
-    const fullCalories = searchNaturalData.data?.foods[0].nf_calories;
-
-    const fullServingWeight =
-      searchNaturalData.data?.foods[0].serving_weight_grams;
-
-    const currentServingWeight = selectedFood?.serving_weight;
-
-    if (!currentServingWeight) {
-      const fullCaloriesRounded = Math.round(fullCalories);
-      dispatch(setCurrentCalories(fullCaloriesRounded));
-    } else {
-      const totalCaloriesTaken =
-        (currentServingWeight / fullServingWeight) * fullCalories;
-      const totalCaloriesTakenRounded = Math.round(totalCaloriesTaken);
-      dispatch(setCurrentCalories(totalCaloriesTakenRounded));
-    }
-  };
+  const { handleSelectChange } = useHandleSelectChange(searchNaturalData);
 
   const handleQuantityChange = (e: FormEvent<HTMLInputElement>) => {
-    dispatch(setCurrentQuantity(Number(e.currentTarget.value)));
+    updateCurrentQuantity(Number(e.currentTarget.value));
   };
 
   return (

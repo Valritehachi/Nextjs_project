@@ -12,12 +12,11 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { setCurrentFood } from "@/store/foodPage/foodPageSlice";
+import useFoodActions from "@/store/foodPage/useFoodActions";
 
 const AddFood = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const dispatch = useAppDispatch();
+  const { updateCurrentFood } = useFoodActions();
 
   const searchInstantData = useQuery({
     queryKey: ["food", searchTerm],
@@ -66,7 +65,7 @@ const AddFood = () => {
                       <Button
                         variant={"link"}
                         className="text-card-foreground"
-                        onClick={() => dispatch(setCurrentFood(item.food_name))}
+                        onClick={() => updateCurrentFood(item.food_name)}
                       >
                         {item.food_name}
                       </Button>
@@ -95,7 +94,7 @@ const AddFood = () => {
                       <Button
                         variant={"link"}
                         className="text-card-foreground"
-                        onClick={() => dispatch(setCurrentFood(item.food_name))}
+                        onClick={() => updateCurrentFood(item.food_name)}
                       >
                         {item.food_name}
                       </Button>

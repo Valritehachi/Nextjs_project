@@ -9,7 +9,7 @@ import {
 import FoodType from "./FoodType";
 import { Button } from "@/components/ui/button";
 
-const FoodPage = () => {
+const FoodPage = async () => {
   return (
     <div className="flex h-full flex-col gap-2 p-2 min-h-full">
       <Dialog>

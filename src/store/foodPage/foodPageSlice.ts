@@ -4,6 +4,7 @@ interface FoodPageState {
   currentFood: string;
   currentAltnative: string;
   currentCalories: number;
+  totalCalories: number;
   currentQuantity: number;
   foodType: CurrentFoodType;
 }
@@ -14,6 +15,7 @@ const initialState: FoodPageState = {
   currentFood: "",
   currentAltnative: "",
   currentCalories: 0,
+  totalCalories: 0,
   currentQuantity: 1,
   foodType: "breakfast",
 };
@@ -37,6 +39,9 @@ const foodPageSlice = createSlice({
     setCurrentAlternative: (state, action: PayloadAction<string>) => {
       state.currentAltnative = action.payload;
     },
+    setTotalCalories: (state, action: PayloadAction<number>) => {
+      state.totalCalories = action.payload;
+    },
 
     AddFood: (state) => {},
   },
@@ -48,6 +53,7 @@ export const {
   setCurrentCalories,
   setCurrentFoodType,
   setCurrentAlternative,
+  setTotalCalories,
 } = foodPageSlice.actions;
 
 export default foodPageSlice.reducer;

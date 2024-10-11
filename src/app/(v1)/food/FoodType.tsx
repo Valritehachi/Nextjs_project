@@ -1,18 +1,16 @@
 "use client";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import {
-  type CurrentFoodType,
-  setCurrentFoodType,
-} from "@/store/foodPage/foodPageSlice";
-import { useAppDispatch } from "@/store/hooks";
+import { type CurrentFoodType } from "@/store/foodPage/foodPageSlice";
+import useFoodActions from "@/store/foodPage/useFoodActions";
 
 const FoodType = () => {
-  const dispatch = useAppDispatch();
+  const { updateCurrentFoodType } = useFoodActions();
 
   const handleTypeChange = (value: CurrentFoodType) => {
-    dispatch(setCurrentFoodType(value));
+    updateCurrentFoodType(value);
   };
+
   return (
     <RadioGroup defaultValue="breakfast" onValueChange={handleTypeChange}>
       <div className="flex gap-2 justify-between">
