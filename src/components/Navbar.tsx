@@ -1,9 +1,7 @@
-"use client";
-
-import React from "react";
 import Link from "next/link";
 import { Button } from "./ui/button";
 import { ModeToggle } from "./mode-toggle";
+import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 const Navbar: React.FC = () => {
   return (
@@ -20,12 +18,19 @@ const Navbar: React.FC = () => {
         </div>
         <div className="flex gap-4 ">
           <ModeToggle />
-          <Button variant="outline">
-            <Link href="/login">Login</Link>
-          </Button>
-          <Button>
-            <Link href="/signup">Sign Up</Link>
-          </Button>
+          <SignedOut>
+            <Link href="/signin">
+              <Button variant="outline">Sign In</Button>
+            </Link>
+            <Link href="/signup">
+              <Button>Sign Up</Button>
+            </Link>
+          </SignedOut>
+          <div className="flex justify-center items-center">
+            <SignedIn>
+              <UserButton />
+            </SignedIn>
+          </div>
         </div>
       </div>
     </div>

@@ -6,11 +6,11 @@ export default function Layout({
 }>) {
   return (
     <div className="flex h-dvh">
-      <div className="grid grid-cols-10 w-full">
+      <div className="grid grid-cols-9 w-full">
         <div className="col-span-2">
           <Sidebar />
         </div>
-        <div className="col-span-8 h-full w-full">{children}</div>
+        <div className="col-span-7 h-full w-full">{children}</div>
       </div>
     </div>
   );

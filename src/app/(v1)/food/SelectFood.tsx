@@ -17,6 +17,7 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { Input } from "@/components/ui/input";
 import { FormEvent } from "react";
 import {
+  setCurrentAlternative,
   setCurrentCalories,
   setCurrentQuantity,
 } from "@/store/foodPage/foodPageSlice";
@@ -28,6 +29,9 @@ const SelectFood = () => {
   );
   const currentCalories = useAppSelector(
     (state) => state.foodPage.currentCalories
+  );
+  const currentAlternative = useAppSelector(
+    (state) => state.foodPage.currentAltnative
   );
   const dispatch = useAppDispatch();
 
@@ -41,9 +45,11 @@ const SelectFood = () => {
   });
 
   const handleSelectChange = (value: string) => {
+    dispatch(setCurrentAlternative(value));
+
     if (!searchNaturalData.data?.foods) return;
     const selectedFood = searchNaturalData.data?.foods[0].alt_measures?.find(
-      (item) => item.measure === value
+      (item) => item.measure === currentAlternative
     );
 
     const fullCalories = searchNaturalData.data?.foods[0].nf_calories;
@@ -113,7 +119,7 @@ const SelectFood = () => {
                           </SelectGroup>
                         </SelectContent>
                       </Select>
-                      <span>Serving</span>
+                      <span>Type</span>
                     </div>
                   )}
                   <p>{currentCalories} Cal</p>

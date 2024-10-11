@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import ReactQueryClientProvider from "@/components/query-client-provider";
 import ReduxProvider from "@/components/redux-provider";
+import ClerkProviderWithTheme from "@/components/clerk-provider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -24,18 +25,18 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-dvh">
       <body className={inter.className}>
-        <ReduxProvider>
-          <ReactQueryClientProvider>
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="system"
-              enableSystem
-              disableTransitionOnChange
-            >
-              {children}
-            </ThemeProvider>
-          </ReactQueryClientProvider>
-        </ReduxProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <ClerkProviderWithTheme>
+            <ReduxProvider>
+              <ReactQueryClientProvider>{children}</ReactQueryClientProvider>
+            </ReduxProvider>
+          </ClerkProviderWithTheme>
+        </ThemeProvider>
       </body>
     </html>
   );

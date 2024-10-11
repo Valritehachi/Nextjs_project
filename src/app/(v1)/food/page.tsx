@@ -6,8 +6,8 @@ import {
   DialogFooter,
   DialogContent,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
 import FoodType from "./FoodType";
+import { Button } from "@/components/ui/button";
 
 const FoodPage = () => {
   return (

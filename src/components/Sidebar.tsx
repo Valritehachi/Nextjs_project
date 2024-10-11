@@ -1,8 +1,9 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import Link from "next/link";
 import { ModeToggle } from "./mode-toggle";
-import { cn } from "@/lib/utils";
 import { Button } from "./ui/button";
+import { SignedIn, UserButton } from "@clerk/nextjs";
+
+import { getCurrentUser } from "@/utils/auth/getUser";
+import NavLinks from "./NavLinks";
 
 const links = [
   { name: "Overview", href: "#" },
@@ -12,43 +13,43 @@ const links = [
   { name: "Settings", href: "#" },
 ];
 
-const Sidebar = () => {
+const Sidebar = async () => {
   const selected = "overview";
+  const user = await getCurrentUser();
 
   return (
-    <div className="bg-accent h-dvh flex flex-col self-end	justify-between gap-2 py-2">
-      <div className="flex flex-col gap-2">
-        <div className="px-4">
-          <Avatar>
-            <AvatarImage src="https://github.com/shadcn.png" />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
+    <div className="bg-card h-dvh flex flex-col self-end	justify-between gap-2 py-2">
+      <div className="flex flex-col gap-2 h-full">
+        <div className="p-4 rounded-md bg-muted ">
+          <div className="rounded-md">
+            <div className="flex items-center">
+              <div className="flex items-center gap-2 ">
+                <div>
+                  <SignedIn>
+                    <UserButton />
+                  </SignedIn>
+                </div>
+                <div className="flex flex-col gap-1 text-xs text-card-foreground">
+                  <div>{user.fullName}</div>
+                  <div>{user.emailAddresses[0].emailAddress}</div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <nav>
-          {links.map((link) => (
-            <Link
-              key={link.name}
-              className={cn(
-                "block px-4 py-2 text-accent-foreground hover:bg-primary hover:text-accent-foreground",
-                selected === link.name.toLowerCase() &&
-                  "bg-secondary text-secondary-foreground"
-              )}
-              href={"/" + link.name.toLowerCase()}
-            >
-              <p>{link.name}</p>
-            </Link>
-          ))}
-        </nav>
-      </div>
-
-      <div className="flex flex-col gap-2">
-        <div className="flex items-center px-4">
-          <ModeToggle />
+        <div className="h-full">
+          <NavLinks />
         </div>
-        <Button className="justify-start" variant={"secondary"}>
-          Logout
-        </Button>
+
+        <div className="flex flex-col gap-2">
+          <div className="flex items-center px-4">
+            <ModeToggle />
+          </div>
+          <Button className="justify-start" variant={"secondary"}>
+            Logout
+          </Button>
+        </div>
       </div>
     </div>
   );
