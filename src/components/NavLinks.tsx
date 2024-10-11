@@ -3,6 +3,7 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 
 import { usePathname } from "next/navigation";
+import path from "path";
 
 const links = [
   { name: "Overview", href: "#", path: "overview" },
@@ -17,22 +18,20 @@ const NavLinks = () => {
   const path = pathname.split("/")[1];
 
   return (
-    <div className="">
-      <nav>
-        {links.map((link) => (
-          <Link
-            key={link.name}
-            className={cn(
-              "block px-4 py-2 text-accent-foreground hover:bg-primary hover:text-accent-foreground",
-              path === link.name.toLowerCase() &&
-                "bg-secondary text-secondary-foreground"
-            )}
-            href={"/" + link.path}
-          >
-            <p>{link.name}</p>
-          </Link>
-        ))}
-      </nav>
+    <div className="flex flex-col gap-2">
+      {links.map((link) => (
+        <Link
+          key={link.name}
+          className={cn(
+            "block px-4 text-accent-foreground hover:bg-primary hover:text-accent-foreground",
+            path === link.name.toLowerCase() &&
+              "bg-secondary text-secondary-foreground"
+          )}
+          href={"/" + link.path}
+        >
+          <p>{link.name}</p>
+        </Link>
+      ))}
     </div>
   );
 };

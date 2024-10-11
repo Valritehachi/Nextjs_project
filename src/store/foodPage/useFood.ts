@@ -1,4 +1,4 @@
-import { useAppSelector } from "@/store/hooks";
+import { useAppSelector } from "../hooks";
 
 const useFood = () => {
   const currentFood = useAppSelector((state) => state.foodPage.currentFood);

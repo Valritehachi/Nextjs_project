@@ -20,22 +20,10 @@ const Sidebar = async () => {
   return (
     <div className="bg-card h-dvh flex flex-col self-end	justify-between gap-2 py-2">
       <div className="flex flex-col gap-2 h-full">
-        <div className="p-4 rounded-md bg-muted ">
-          <div className="rounded-md">
-            <div className="flex items-center">
-              <div className="flex items-center gap-2 ">
-                <div>
-                  <SignedIn>
-                    <UserButton />
-                  </SignedIn>
-                </div>
-                <div className="flex flex-col gap-1 text-xs text-card-foreground">
-                  <div>{user.fullName}</div>
-                  <div>{user.emailAddresses[0].emailAddress}</div>
-                </div>
-              </div>
-            </div>
-          </div>
+        <div className="px-4">
+          <SignedIn>
+            <UserButton />
+          </SignedIn>
         </div>
 
         <div className="h-full">
