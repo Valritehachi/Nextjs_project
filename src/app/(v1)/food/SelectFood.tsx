@@ -17,25 +17,17 @@ import { FormEvent } from "react";
 import useFood from "@/store/foodPage/useFood";
 import useFoodActions from "@/store/foodPage/useFoodActions";
 import useHandleSelectChange from "@/store/foodPage/useCalculateCalories";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const SelectFood = () => {
-  const { currentFood, currentQuantity, currentCalories, currentAlternative } =
-    useFood();
+  const { currentFood, currentQuantity, currentCalories } = useFood();
 
-  const {
-    updateCurrentQuantity,
-    updateCurrentCalories,
-    updateCurrentAlternative,
-    updateTotalCalories,
-  } = useFoodActions();
+  const { updateCurrentQuantity } = useFoodActions();
 
   const searchNaturalData = useQuery({
-    queryKey: ["food", currentFood],
+    queryKey: ["food", "searchNatural", currentFood],
     queryFn: () => searchNaturalNutrients(currentFood),
-    refetchOnReconnect: false,
-    refetchOnWindowFocus: false,
-    refetchOnMount: false,
-    refetchInterval: false,
+    staleTime: Infinity,
   });
 
   const { handleSelectChange } = useHandleSelectChange(searchNaturalData);
@@ -54,12 +46,16 @@ const SelectFood = () => {
           {searchNaturalData.data && (
             <div>
               {searchNaturalData.data?.foods?.map((item) => (
-                <div key={item.upc} className="flex gap-2 items-center">
+                <div
+                  key={item.upc}
+                  className="grid grid-cols-7 gap-2 items-center"
+                >
                   <Image
                     src={item.photo.thumb}
                     alt="foodImage"
                     height={80}
                     width={80}
+                    className="col-span-2"
                   />
                   <div className="flex flex-col gap-1 items-center">
                     <Input
@@ -70,7 +66,7 @@ const SelectFood = () => {
                     <span>Quantity</span>
                   </div>
                   {item.alt_measures && (
-                    <div className="w-full flex flex-col gap-1 items-center">
+                    <div className="col-span-3 w-full flex flex-col gap-1 items-center">
                       <Select onValueChange={handleSelectChange}>
                         <SelectTrigger className="w-full">
                           <SelectValue />
@@ -92,7 +88,10 @@ const SelectFood = () => {
                       <span>Type</span>
                     </div>
                   )}
-                  <p>{currentCalories} Cal</p>
+                  <div className="flex flex-col justify-center items-center">
+                    <p className="font-bold text-xl">{currentCalories}</p>
+                    <p>Cal</p>
+                  </div>
                 </div>
               ))}
             </div>

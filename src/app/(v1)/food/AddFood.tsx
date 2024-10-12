@@ -2,8 +2,7 @@
 import { Input } from "@/components/ui/input";
 import { searchInstant } from "@/utils/api/searchInstant";
 import { useQuery } from "@tanstack/react-query";
-import { FormEvent, useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useRef, useState } from "react";
 import Image from "next/image";
 import {
   DialogDescription,
@@ -13,19 +12,25 @@ import {
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import useFoodActions from "@/store/foodPage/useFoodActions";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const AddFood = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const { updateCurrentFood } = useFoodActions();
+  const { updateCurrentFood, updateCurrentPhoto } = useFoodActions();
+
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const searchInstantData = useQuery({
-    queryKey: ["food", searchTerm],
+    queryKey: ["food", "search", searchTerm],
     queryFn: () => searchInstant(searchTerm),
-    refetchOnReconnect: false,
-    refetchOnWindowFocus: false,
-    refetchOnMount: false,
-    refetchInterval: false,
+    staleTime: Infinity,
   });
+
+  const handleSearchClick = () => {
+    if (inputRef.current) {
+      setSearchTerm(inputRef.current.value);
+    }
+  };
 
   return (
     <div className="flex flex-col gap-2">
@@ -33,14 +38,10 @@ const AddFood = () => {
         <DialogTitle>Add Food</DialogTitle>
         <DialogDescription>Add food to your log</DialogDescription>
       </DialogHeader>
-      <Input
-        value={searchTerm}
-        type="search"
-        placeholder="Search foods..."
-        onChange={(event: FormEvent<HTMLInputElement>) => {
-          setSearchTerm(event.currentTarget.value);
-        }}
-      />
+      <div className="flex gap-1">
+        <Input ref={inputRef} type="search" placeholder="Search foods..." />
+        <Button onClick={handleSearchClick}>Search</Button>
+      </div>
       <Tabs defaultValue="common" className="w-full min-h-[50%]">
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="common">Common</TabsTrigger>
@@ -65,7 +66,10 @@ const AddFood = () => {
                       <Button
                         variant={"link"}
                         className="text-card-foreground"
-                        onClick={() => updateCurrentFood(item.food_name)}
+                        onClick={() => {
+                          updateCurrentFood(item.food_name);
+                          updateCurrentPhoto(item.photo.thumb);
+                        }}
                       >
                         {item.food_name}
                       </Button>
@@ -94,7 +98,10 @@ const AddFood = () => {
                       <Button
                         variant={"link"}
                         className="text-card-foreground"
-                        onClick={() => updateCurrentFood(item.food_name)}
+                        onClick={() => {
+                          updateCurrentFood(item.food_name);
+                          updateCurrentPhoto(item.photo.thumb);
+                        }}
                       >
                         {item.food_name}
                       </Button>

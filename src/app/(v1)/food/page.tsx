@@ -9,8 +9,12 @@ import {
 import FoodType from "./FoodType";
 import { Button } from "@/components/ui/button";
 import ShowFoods from "./ShowFoods";
+import { getUserId } from "@/utils/auth/getUserId";
+import SaveFood from "./SaveFood";
+import DailyData from "./DailyData";
 
 const FoodPage = async () => {
+  const userId = await getUserId();
   return (
     <div className="flex flex-col gap-2 p-2 min-h-full">
       <Dialog>
@@ -19,14 +23,19 @@ const FoodPage = async () => {
         </DialogTrigger>
         <DialogContent className="w-full">
           <AddFood />
+
           <SelectFood />
+
           <FoodType />
           <DialogFooter>
-            <Button type="submit">Save changes</Button>
+            <DialogTrigger>
+              <SaveFood userId={userId} />
+            </DialogTrigger>
           </DialogFooter>
         </DialogContent>
       </Dialog>
-      <ShowFoods />
+      <DailyData userId={userId} />
+      <ShowFoods userId={userId} />
     </div>
   );
 };

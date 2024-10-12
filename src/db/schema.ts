@@ -10,7 +10,7 @@ import {
 
 const pgTable = pgTableCreator((name) => `plate_plan_${name}`);
 
-const foodTypeEnum = pgEnum("food_type", [
+export const foodTypeEnum = pgEnum("food_type_enum", [
   "breakfast",
   "lunch",
   "dinner",
@@ -24,7 +24,8 @@ export const foodTable = pgTable("food_table", {
   alternativeFood: text("alternative_food").notNull(),
   calories: integer("calories").notNull(),
   quantity: integer("quantity").notNull(),
-  foodType: foodTypeEnum("food_type").default("breakfast").notNull(),
+  foodType: foodTypeEnum("food_type_enum").default("breakfast").notNull(),
+  photo: text("photo"),
   dateConsumed: date("date_consumed").notNull(),
   createdAt: timestamp("created_at").default(new Date()),
   updatedAt: timestamp("updated_at"),
@@ -44,8 +45,8 @@ export const dailySummaryTable = pgTable("daily_summary_table", {
   id: serial("id").primaryKey(),
   date: date("date").unique().notNull(),
   userId: text("user_id").notNull(),
-  totalCalories: integer("total_calories").notNull(),
-  totalWater: integer("total_water").notNull(),
+  totalCalories: integer("total_calories").notNull().default(0),
+  totalWater: integer("total_water").notNull().default(0),
   createdAt: timestamp("created_at").default(new Date()),
   updatedAt: timestamp("updated_at"),
 });

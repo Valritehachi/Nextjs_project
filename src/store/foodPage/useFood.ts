@@ -14,6 +14,8 @@ const useFood = () => {
   const totalCalories = useAppSelector((state) => state.foodPage.totalCalories);
   const foodType = useAppSelector((state) => state.foodPage.foodType);
 
+  const currentPhoto = useAppSelector((state) => state.foodPage.currentPhoto);
+
   return {
     currentFood,
     currentQuantity,
@@ -21,6 +23,7 @@ const useFood = () => {
     currentAlternative,
     totalCalories,
     foodType,
+    currentPhoto,
   };
 };
 

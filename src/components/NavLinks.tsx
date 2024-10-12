@@ -18,12 +18,12 @@ const NavLinks = () => {
   const path = pathname.split("/")[1];
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-0">
       {links.map((link) => (
         <Link
           key={link.name}
           className={cn(
-            "block px-4 text-accent-foreground hover:bg-primary hover:text-accent-foreground",
+            "block px-4 py-2 text-accent-foreground hover:bg-primary hover:text-accent-foreground",
             path === link.name.toLowerCase() &&
               "bg-secondary text-secondary-foreground"
           )}

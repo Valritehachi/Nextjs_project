@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import ReactQueryClientProvider from "@/components/query-client-provider";
 import ReduxProvider from "@/components/redux-provider";
 import ClerkProviderWithTheme from "@/components/clerk-provider";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -33,7 +34,10 @@ export default function RootLayout({
         >
           <ClerkProviderWithTheme>
             <ReduxProvider>
-              <ReactQueryClientProvider>{children}</ReactQueryClientProvider>
+              <ReactQueryClientProvider>
+                <ReactQueryDevtools initialIsOpen={false} />
+                {children}
+              </ReactQueryClientProvider>
             </ReduxProvider>
           </ClerkProviderWithTheme>
         </ThemeProvider>

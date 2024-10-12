@@ -7,6 +7,7 @@ interface FoodPageState {
   totalCalories: number;
   currentQuantity: number;
   foodType: CurrentFoodType;
+  currentPhoto: string;
 }
 
 export type CurrentFoodType = "breakfast" | "lunch" | "dinner" | "snack";
@@ -18,6 +19,7 @@ const initialState: FoodPageState = {
   totalCalories: 0,
   currentQuantity: 1,
   foodType: "breakfast",
+  currentPhoto: "",
 };
 
 const foodPageSlice = createSlice({
@@ -42,8 +44,13 @@ const foodPageSlice = createSlice({
     setTotalCalories: (state, action: PayloadAction<number>) => {
       state.totalCalories = action.payload;
     },
+    setCurrentPhoto: (state, action: PayloadAction<string>) => {
+      state.currentPhoto = action.payload;
+    },
 
-    AddFood: (state) => {},
+    resetState: (state) => {
+      state = initialState;
+    },
   },
 });
 
@@ -54,6 +61,8 @@ export const {
   setCurrentFoodType,
   setCurrentAlternative,
   setTotalCalories,
+  setCurrentPhoto,
+  resetState,
 } = foodPageSlice.actions;
 
 export default foodPageSlice.reducer;
