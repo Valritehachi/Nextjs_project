@@ -4,11 +4,8 @@ import { useUpdateTotalCaloriesForDay } from "@/hooks/db/dailySummaryDataHooks";
 import useFood from "@/hooks/food/useFood";
 import useFoodActions from "@/hooks/food/useFoodActions";
 import { useAddFoodEntry } from "@/hooks/db/foodDataHooks";
-import { updateTotalCaloriesForDay } from "@/utils/db/dailySummaryTableUtils";
-import { addFoodEntry } from "@/utils/db/foodTableUtils";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-const SaveFood: React.FC<{ userId: string }> = ({ userId }) => {
+const SaveFood: React.FC<{ today?: boolean }> = ({ today }) => {
   const {
     currentFood,
     currentQuantity,
@@ -16,19 +13,20 @@ const SaveFood: React.FC<{ userId: string }> = ({ userId }) => {
     currentCalories,
     currentPhoto,
     currentAlternative,
+    currentDate,
+    userId,
   } = useFood();
+  const todaysDate = new Date().toLocaleDateString();
 
   const { resetFoodPageState } = useFoodActions();
 
-  const currentDate = new Date().toLocaleDateString();
-
-  const mutation = useAddFoodEntry(userId);
-  const updateDailySummary = useUpdateTotalCaloriesForDay(userId);
+  const mutation = useAddFoodEntry();
+  const updateDailySummary = useUpdateTotalCaloriesForDay();
 
   const handleAddFood = async () => {
     resetFoodPageState();
     await mutation.mutateAsync({
-      dateConsumed: currentDate,
+      dateConsumed: today ? todaysDate : currentDate,
       alternativeFood: currentAlternative,
       calories: currentCalories,
       foodName: currentFood,

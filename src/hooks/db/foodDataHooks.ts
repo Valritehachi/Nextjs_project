@@ -1,19 +1,26 @@
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import useFood from "../food/useFood";
 import {
   addFoodEntry,
-  deleteEntry,
+  deleteFoodEntry,
   getFoodEntriesByDay,
   updateFoodEntry,
 } from "@/utils/db/foodTableUtils";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
-const currentDate = new Date().toLocaleDateString();
+const useQueryKey = (today?: boolean) => {
+  const userId = useFood().userId;
+  const date = useDate(today);
 
-const useQueryKey = (userId: string) => {
-  return ["food", "query", currentDate, userId];
+  return ["food", "query", date, userId];
 };
 
-const useInvalidateDailyQueries = (userId: string) => {
-  const queryKey = useQueryKey(userId);
+const useDate = (today?: boolean) => {
+  const { currentDate } = useFood();
+  return today ? new Date().toLocaleDateString() : currentDate;
+};
+
+const useInvalidateDailyQueries = (today?: boolean) => {
+  const queryKey = useQueryKey(today);
   const queryClient = useQueryClient();
   return () => {
     queryClient.invalidateQueries({
@@ -22,16 +29,18 @@ const useInvalidateDailyQueries = (userId: string) => {
   };
 };
 
-export const useGetFoodEntriesByDay = (userId: string, date: string) => {
-  const queryKey = useQueryKey(userId);
+export const useGetFoodEntriesByDay = (today?: boolean) => {
+  const queryKey = useQueryKey(today);
+  const date = useDate(today);
+  const userId = useFood().userId;
   return useQuery({
-    queryFn: () => getFoodEntriesByDay({ date: date, userId }),
+    queryFn: () => getFoodEntriesByDay({ date, userId }),
     queryKey,
   });
 };
 
-export const useAddFoodEntry = (userId: string) => {
-  const invalidateDailyQueries = useInvalidateDailyQueries(userId);
+export const useAddFoodEntry = (today?: boolean) => {
+  const invalidateDailyQueries = useInvalidateDailyQueries(today);
 
   return useMutation({
     mutationFn: addFoodEntry,
@@ -39,8 +48,8 @@ export const useAddFoodEntry = (userId: string) => {
   });
 };
 
-export const useUpdateFoodEntry = (userId: string) => {
-  const invalidateDailyQueries = useInvalidateDailyQueries(userId);
+export const useUpdateFoodEntry = (today?: boolean) => {
+  const invalidateDailyQueries = useInvalidateDailyQueries(today);
 
   return useMutation({
     mutationFn: updateFoodEntry,
@@ -48,11 +57,11 @@ export const useUpdateFoodEntry = (userId: string) => {
   });
 };
 
-export const useDeleteFoodEntry = (userId: string) => {
-  const invalidateDailyQueries = useInvalidateDailyQueries(userId);
+export const useDeleteFoodEntry = (today?: boolean) => {
+  const invalidateDailyQueries = useInvalidateDailyQueries(today);
 
   return useMutation({
-    mutationFn: deleteEntry,
+    mutationFn: deleteFoodEntry,
     onSuccess: invalidateDailyQueries,
   });
 };

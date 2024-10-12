@@ -3,10 +3,10 @@ import { Accordion } from "@/components/ui/accordion";
 
 import FoodTypeData from "./FoodTypeData";
 import { useGetFoodEntriesByDay } from "@/hooks/db/foodDataHooks";
+import useFood from "@/hooks/food/useFood";
 
-const ShowFoods: React.FC<{ userId: string }> = ({ userId }) => {
-  const currentDate = new Date().toLocaleDateString();
-  const foodData = useGetFoodEntriesByDay(userId, currentDate);
+const ShowFoods: React.FC = () => {
+  const foodData = useGetFoodEntriesByDay();
 
   const breakfastData = foodData.data?.filter(
     (item) => item.foodType === "breakfast"

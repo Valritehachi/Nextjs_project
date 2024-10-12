@@ -17,6 +17,7 @@ const useFood = () => {
   const currentPhoto = useAppSelector((state) => state.foodPage.currentPhoto);
 
   const currentDate = useAppSelector((state) => state.foodPage.currentDate);
+  const userId = useAppSelector((state) => state.foodPage.userId);
 
   return {
     currentFood,
@@ -27,6 +28,7 @@ const useFood = () => {
     foodType,
     currentPhoto,
     currentDate,
+    userId,
   };
 };
 

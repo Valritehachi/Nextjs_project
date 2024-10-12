@@ -4,15 +4,22 @@ import {
   updateTotalWaterForDay,
 } from "@/utils/db/dailySummaryTableUtils";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import useFood from "../food/useFood";
 
-const currentDate = new Date().toLocaleDateString();
+const useQueryKey = (today?: boolean) => {
+  const userId = useFood().userId;
+  const date = useDate(today);
 
-const useQueryKey = (userId: string) => {
-  return ["dailySumary", "query", currentDate, userId];
+  return ["dailySumary", "query", date, userId];
 };
 
-const useInvalidateDailyQueries = (userId: string) => {
-  const queryKey = useQueryKey(userId);
+const useDate = (today?: boolean) => {
+  const { currentDate } = useFood();
+  return today ? new Date().toLocaleDateString() : currentDate;
+};
+
+const useInvalidateDailyQueries = (today?: boolean) => {
+  const queryKey = useQueryKey(today);
   const queryClient = useQueryClient();
   return () => {
     queryClient.invalidateQueries({
@@ -21,16 +28,18 @@ const useInvalidateDailyQueries = (userId: string) => {
   };
 };
 
-export const useGetDailyEntriesByDay = (userId: string, date: string) => {
-  const queryKey = useQueryKey(userId);
+export const useGetDailyEntriesByDay = (today?: boolean) => {
+  const queryKey = useQueryKey(today);
+  const date = useDate(today);
+  const userId = useFood().userId;
   return useQuery({
     queryFn: () => getDailySummaryByDay({ date, userId }),
     queryKey,
   });
 };
 
-export const useUpdateTotalCaloriesForDay = (userId: string) => {
-  const invalidateDailyQueries = useInvalidateDailyQueries(userId);
+export const useUpdateTotalCaloriesForDay = (today?: boolean) => {
+  const invalidateDailyQueries = useInvalidateDailyQueries(today);
 
   return useMutation({
     mutationFn: updateTotalCaloriesForDay,
@@ -38,8 +47,8 @@ export const useUpdateTotalCaloriesForDay = (userId: string) => {
   });
 };
 
-export const useUpdateTotalWaterForDay = (userId: string) => {
-  const invalidateDailyQueries = useInvalidateDailyQueries(userId);
+export const useUpdateTotalWaterForDay = (today?: boolean) => {
+  const invalidateDailyQueries = useInvalidateDailyQueries(today);
 
   return useMutation({
     mutationFn: updateTotalWaterForDay,

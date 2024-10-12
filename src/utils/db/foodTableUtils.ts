@@ -44,7 +44,7 @@ export const updateFoodEntry = async ({
     .where(and(eq(foodTable.id, id), eq(foodTable.userId, userId)));
 };
 
-export const deleteEntry = async ({ id, userId }: DeleteEntryParams) => {
+export const deleteFoodEntry = async ({ id, userId }: DeleteEntryParams) => {
   await db
     .delete(foodTable)
     .where(and(eq(foodTable.id, id), eq(foodTable.userId, userId)));

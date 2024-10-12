@@ -1,11 +1,15 @@
 "use client";
 import { Progress } from "@/components/ui/progress";
 import { useGetDailyEntriesByDay } from "@/hooks/db/dailySummaryDataHooks";
+import useFood from "@/hooks/food/useFood";
+import { format, formatRelative } from "date-fns";
 import { useMemo } from "react";
+import AddFood from "./AddFood";
 
-const DailyData: React.FC<{ userId: string }> = ({ userId }) => {
-  const currentDate = new Date().toLocaleDateString();
-  const dailyData = useGetDailyEntriesByDay(userId, currentDate);
+const DailyData: React.FC = () => {
+  const today = new Date().toLocaleDateString();
+  const { currentDate } = useFood();
+  const dailyData = useGetDailyEntriesByDay();
 
   const requiredCalories = 2000;
   const consumedCalories = dailyData.data?.[0]?.totalCalories ?? 0;
@@ -24,9 +28,14 @@ const DailyData: React.FC<{ userId: string }> = ({ userId }) => {
 
   return (
     <div>
-      <h3 className="scroll-m-20 text-2xl pl-2 font-semibold tracking-tight">
-        Today
-      </h3>
+      <div className="flex gap-2">
+        <h3 className="scroll-m-20 text-2xl pl-2 font-semibold tracking-tight">
+          {today === currentDate
+            ? "Today"
+            : formatRelative(new Date(currentDate), new Date())}
+        </h3>
+        <AddFood />
+      </div>
       <div className="flex gap-4 flex-col w-full">
         <div>
           <h4 className="scroll-m-20 text-lg text-center font-semibold tracking-tight">
