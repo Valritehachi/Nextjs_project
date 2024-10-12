@@ -17,6 +17,13 @@ export const foodTypeEnum = pgEnum("food_type_enum", [
   "snack",
 ]);
 
+export const genderTypeEnum = pgEnum("gender_type_enum", [
+  "breakfast",
+  "lunch",
+  "dinner",
+  "snack",
+]);
+
 export const foodTable = pgTable("food_table", {
   id: serial("id").primaryKey(),
   userId: text("user_id").notNull(),
@@ -34,7 +41,6 @@ export const foodTable = pgTable("food_table", {
 export const hydrationTable = pgTable("hydration_table", {
   id: serial("id").primaryKey(),
   userId: text("user_id").notNull(),
-  caloriesConsumed: integer("calories_consumed").notNull(),
   waterConsumed: integer("water_consumed").notNull(),
   dateConsumed: date("date_consumed").notNull(),
   createdAt: timestamp("created_at").default(new Date()),
@@ -51,6 +57,17 @@ export const dailySummaryTable = pgTable("daily_summary_table", {
   updatedAt: timestamp("updated_at"),
 });
 
+export const userTable = pgTable("user_table", {
+  userId: text("user_id").primaryKey().notNull(),
+  weight: integer("weight"),
+  height: integer("height"),
+  age: integer("age"),
+  gender: genderTypeEnum("gender"),
+  preferredCalories: integer("preferred_calories").default(0),
+  preferredWater: integer("preferred_water").default(0),
+  createdAt: timestamp("created_at").default(new Date()),
+});
+
 export type FoodInsert = typeof foodTable.$inferInsert;
 export type FoodSelect = typeof foodTable.$inferSelect;
 
@@ -59,3 +76,6 @@ export type HydrationSelect = typeof hydrationTable.$inferSelect;
 
 export type DailySummaryInsert = typeof dailySummaryTable.$inferInsert;
 export type DailySummarySelect = typeof dailySummaryTable.$inferSelect;
+
+export type UserInsert = typeof userTable.$inferInsert;
+export type UserSelect = typeof userTable.$inferSelect;

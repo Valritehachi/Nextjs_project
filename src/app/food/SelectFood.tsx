@@ -1,5 +1,4 @@
 "use client";
-import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Image from "next/image";
 import {
@@ -10,25 +9,20 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { searchNaturalNutrients } from "@/utils/api/searchNaturalNutrients";
 import { Input } from "@/components/ui/input";
 import { FormEvent } from "react";
 
-import useFood from "@/store/foodPage/useFood";
-import useFoodActions from "@/store/foodPage/useFoodActions";
-import useHandleSelectChange from "@/store/foodPage/useCalculateCalories";
-import { Skeleton } from "@/components/ui/skeleton";
+import useFood from "@/hooks/food/useFood";
+import useFoodActions from "@/hooks/food/useFoodActions";
+import useHandleSelectChange from "@/hooks/food/useCalculateCalories";
+import { useSearchNatural } from "@/hooks/api/useSearchNatural";
 
-const SelectFood = () => {
+const SelectFood: React.FC = () => {
   const { currentFood, currentQuantity, currentCalories } = useFood();
 
   const { updateCurrentQuantity } = useFoodActions();
 
-  const searchNaturalData = useQuery({
-    queryKey: ["food", "searchNatural", currentFood],
-    queryFn: () => searchNaturalNutrients(currentFood),
-    staleTime: Infinity,
-  });
+  const searchNaturalData = useSearchNatural(currentFood);
 
   const { handleSelectChange } = useHandleSelectChange(searchNaturalData);
 

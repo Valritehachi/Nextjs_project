@@ -8,6 +8,7 @@ interface FoodPageState {
   currentQuantity: number;
   foodType: CurrentFoodType;
   currentPhoto: string;
+  currentDate: string;
 }
 
 export type CurrentFoodType = "breakfast" | "lunch" | "dinner" | "snack";
@@ -20,6 +21,7 @@ const initialState: FoodPageState = {
   currentQuantity: 1,
   foodType: "breakfast",
   currentPhoto: "",
+  currentDate: new Date().toLocaleDateString(),
 };
 
 const foodPageSlice = createSlice({
@@ -47,6 +49,9 @@ const foodPageSlice = createSlice({
     setCurrentPhoto: (state, action: PayloadAction<string>) => {
       state.currentPhoto = action.payload;
     },
+    setCurrentDate: (state, action: PayloadAction<string>) => {
+      state.currentDate = action.payload;
+    },
 
     resetState: (state) => {
       state = initialState;
@@ -62,6 +67,7 @@ export const {
   setCurrentAlternative,
   setTotalCalories,
   setCurrentPhoto,
+  setCurrentDate,
   resetState,
 } = foodPageSlice.actions;
 

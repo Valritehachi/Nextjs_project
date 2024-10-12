@@ -23,10 +23,12 @@ const NotFoundTemplate: React.FC<NotFoundTemplateProps> = ({
         </p>
         <div className="mt-10 flex items-center justify-center gap-x-6">
           <Link href={link}>
-            <Button variant={"outline"}>{linkText}</Button>
+            <Button variant={"outline"} className="text-accent-foreground">
+              {linkText}
+            </Button>
           </Link>
           <Link href="/contact">
-            <Button variant={"link"} className="text-muted">
+            <Button variant={"link"} className="text-accent-foreground">
               Contact support
             </Button>
           </Link>

@@ -12,11 +12,13 @@ import ShowFoods from "./ShowFoods";
 import { getUserId } from "@/utils/auth/getUserId";
 import SaveFood from "./SaveFood";
 import DailyData from "./DailyData";
+import WaterData from "./WaterData";
+import PickDate from "./PickDate";
 
 const FoodPage = async () => {
   const userId = await getUserId();
   return (
-    <div className="flex flex-col gap-2 p-2 min-h-full">
+    <div className="flex flex-col gap-4 p-2 min-h-full">
       <Dialog>
         <DialogTrigger asChild>
           <Button variant="outline">Add food</Button>
@@ -34,8 +36,11 @@ const FoodPage = async () => {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+      <PickDate />
       <DailyData userId={userId} />
+
       <ShowFoods userId={userId} />
+      <WaterData userId={userId} />
     </div>
   );
 };

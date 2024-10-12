@@ -1,6 +1,6 @@
 import { SearchNaturalNutrientsType } from "@/types/api/searchNaturalNutrients";
-import useFood from "@/store/foodPage/useFood";
-import useFoodActions from "@/store/foodPage/useFoodActions";
+import useFood from "@/hooks/food/useFood";
+import useFoodActions from "@/hooks/food/useFoodActions";
 import { UseQueryResult } from "@tanstack/react-query";
 
 const useHandleSelectChange = (

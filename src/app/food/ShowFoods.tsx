@@ -1,23 +1,12 @@
 "use client";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import { Skeleton } from "@/components/ui/skeleton";
-import { FoodSelect } from "@/db/schema";
-import { getFoodEntriesByDay } from "@/utils/db/foodTableUtils";
-import { useQuery, UseQueryResult } from "@tanstack/react-query";
-import Image from "next/image";
+import { Accordion } from "@/components/ui/accordion";
+
 import FoodTypeData from "./FoodTypeData";
+import { useGetFoodEntriesByDay } from "@/hooks/db/foodDataHooks";
 
 const ShowFoods: React.FC<{ userId: string }> = ({ userId }) => {
   const currentDate = new Date().toLocaleDateString();
-  const foodData = useQuery({
-    queryKey: ["food", "entries", currentDate, userId],
-    queryFn: () => getFoodEntriesByDay({ date: currentDate, userId }),
-  });
+  const foodData = useGetFoodEntriesByDay(userId, currentDate);
 
   const breakfastData = foodData.data?.filter(
     (item) => item.foodType === "breakfast"
@@ -30,7 +19,7 @@ const ShowFoods: React.FC<{ userId: string }> = ({ userId }) => {
 
   return (
     <div>
-      <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight text-center">
+      <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight p-2">
         Food data
       </h3>
       <Accordion type="single" collapsible className="w-full">

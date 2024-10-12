@@ -2,7 +2,7 @@
 import { db } from "@/db/db";
 import { DailySummaryInsert, dailySummaryTable, foodTable } from "@/db/schema";
 import { and, eq } from "drizzle-orm";
-import { getWaterEntriesByDay } from "./hydrationTableUtils";
+import { getWaterEntriesByDay } from "./waterTableUtils";
 import { getFoodEntriesByDay } from "./foodTableUtils";
 
 interface DailySummaryParams {
@@ -17,13 +17,9 @@ export const updateTotalCaloriesForDay = async ({
   // Calculate total calories for the day
   const result = await getFoodEntriesByDay({ date, userId });
 
-  console.log("result", result);
-
   const totalCalories = result.reduce((acc, entry) => {
     return acc + entry.calories;
   }, 0);
-
-  console.log("totalCalories", totalCalories);
 
   // Update the dailySummaryTable with the total calories
   // Check if there's already an entry for the day

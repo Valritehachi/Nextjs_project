@@ -8,6 +8,7 @@ import {
   setTotalCalories,
   setCurrentPhoto,
   resetState,
+  setCurrentDate,
 } from "@/store/foodPage/foodPageSlice";
 import { CurrentFoodType } from "@/store/foodPage/foodPageSlice";
 
@@ -42,6 +43,10 @@ const useFoodActions = () => {
     dispatch(setCurrentPhoto(photo));
   };
 
+  const updateCurrentDate = (date: string) => {
+    dispatch(setCurrentDate(date));
+  };
+
   const resetFoodPageState = () => {
     dispatch(resetState());
   };
@@ -54,6 +59,7 @@ const useFoodActions = () => {
     updateCurrentAlternative,
     updateTotalCalories,
     resetFoodPageState,
+    updateCurrentDate,
     updateCurrentPhoto,
   };
 };

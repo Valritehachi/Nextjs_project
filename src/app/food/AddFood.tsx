@@ -1,8 +1,6 @@
 "use client";
 import { Input } from "@/components/ui/input";
-import { searchInstant } from "@/utils/api/searchInstant";
-import { useQuery } from "@tanstack/react-query";
-import { useRef, useState } from "react";
+import { useCallback, useRef } from "react";
 import Image from "next/image";
 import {
   DialogDescription,
@@ -11,26 +9,31 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import useFoodActions from "@/store/foodPage/useFoodActions";
+import useFoodActions from "@/hooks/food/useFoodActions";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useSearchInstant } from "@/hooks/api/useSearchInstant";
 
-const AddFood = () => {
-  const [searchTerm, setSearchTerm] = useState<string>("");
+const AddFood: React.FC = () => {
   const { updateCurrentFood, updateCurrentPhoto } = useFoodActions();
 
   const inputRef = useRef<HTMLInputElement>(null);
+  const searchTerm = inputRef.current?.value;
 
-  const searchInstantData = useQuery({
-    queryKey: ["food", "search", searchTerm],
-    queryFn: () => searchInstant(searchTerm),
-    staleTime: Infinity,
-  });
+  const searchInstant = useSearchInstant(searchTerm ?? "");
 
-  const handleSearchClick = () => {
+  const handleSearchClick = useCallback(() => {
     if (inputRef.current) {
-      setSearchTerm(inputRef.current.value);
+      searchInstant.refetch();
     }
-  };
+  }, [searchInstant]);
+
+  const handleFoodClick = useCallback(
+    (foodName: string, photoThumb: string) => {
+      updateCurrentFood(foodName);
+      updateCurrentPhoto(photoThumb);
+    },
+    [updateCurrentFood, updateCurrentPhoto]
+  );
 
   return (
     <div className="flex flex-col gap-2">
@@ -54,8 +57,8 @@ const AddFood = () => {
             </CardHeader>
             <CardContent>
               <div className="flex flex-col gap-1  justify-center">
-                {searchInstantData.data?.common &&
-                  searchInstantData.data?.common.slice(0, 5).map((item) => (
+                {searchInstant.data?.common &&
+                  searchInstant.data?.common.slice(0, 5).map((item) => (
                     <div key={item.tag_id} className="flex gap-2">
                       <Image
                         src={item.photo.thumb}
@@ -66,10 +69,9 @@ const AddFood = () => {
                       <Button
                         variant={"link"}
                         className="text-card-foreground"
-                        onClick={() => {
-                          updateCurrentFood(item.food_name);
-                          updateCurrentPhoto(item.photo.thumb);
-                        }}
+                        onClick={() =>
+                          handleFoodClick(item.food_name, item.photo.thumb)
+                        }
                       >
                         {item.food_name}
                       </Button>
@@ -86,8 +88,8 @@ const AddFood = () => {
             </CardHeader>
             <CardContent>
               <div className="flex flex-col gap-1  justify-center ">
-                {searchInstantData.data?.branded &&
-                  searchInstantData.data?.branded.slice(0, 5).map((item) => (
+                {searchInstant.data?.branded &&
+                  searchInstant.data?.branded.slice(0, 5).map((item) => (
                     <div key={item.nix_item_id} className="flex gap-2">
                       <Image
                         src={item.photo.thumb}
@@ -98,10 +100,9 @@ const AddFood = () => {
                       <Button
                         variant={"link"}
                         className="text-card-foreground"
-                        onClick={() => {
-                          updateCurrentFood(item.food_name);
-                          updateCurrentPhoto(item.photo.thumb);
-                        }}
+                        onClick={() =>
+                          handleFoodClick(item.food_name, item.photo.thumb)
+                        }
                       >
                         {item.food_name}
                       </Button>

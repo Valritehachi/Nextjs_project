@@ -53,7 +53,7 @@ export const updateWaterEntry = async ({
     .where(and(eq(hydrationTable.id, id), eq(hydrationTable.userId, userId)));
 };
 
-export const deleteEntry = async ({ id, userId }: DeleteEntryParams) => {
+export const deleteWaterEntry = async ({ id, userId }: DeleteEntryParams) => {
   await db
     .delete(hydrationTable)
     .where(and(eq(hydrationTable.id, id), eq(hydrationTable.userId, userId)));

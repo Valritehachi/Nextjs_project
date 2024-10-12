@@ -6,6 +6,7 @@ import ReactQueryClientProvider from "@/components/query-client-provider";
 import ReduxProvider from "@/components/redux-provider";
 import ClerkProviderWithTheme from "@/components/clerk-provider";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import Navbar from "@/components/Navbar";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -36,7 +37,12 @@ export default function RootLayout({
             <ReduxProvider>
               <ReactQueryClientProvider>
                 <ReactQueryDevtools initialIsOpen={false} />
-                {children}
+                <div className="bg-accent">
+                  <div className="container h-dvh bg-accent flex flex-col w-full  mx-auto">
+                    <Navbar />
+                    {children}
+                  </div>
+                </div>
               </ReactQueryClientProvider>
             </ReduxProvider>
           </ClerkProviderWithTheme>

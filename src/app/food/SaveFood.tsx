@@ -1,7 +1,9 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import useFood from "@/store/foodPage/useFood";
-import useFoodActions from "@/store/foodPage/useFoodActions";
+import { useUpdateTotalCaloriesForDay } from "@/hooks/db/dailySummaryDataHooks";
+import useFood from "@/hooks/food/useFood";
+import useFoodActions from "@/hooks/food/useFoodActions";
+import { useAddFoodEntry } from "@/hooks/db/foodDataHooks";
 import { updateTotalCaloriesForDay } from "@/utils/db/dailySummaryTableUtils";
 import { addFoodEntry } from "@/utils/db/foodTableUtils";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -20,25 +22,8 @@ const SaveFood: React.FC<{ userId: string }> = ({ userId }) => {
 
   const currentDate = new Date().toLocaleDateString();
 
-  const queryClient = useQueryClient();
-
-  const mutation = useMutation({
-    mutationFn: addFoodEntry,
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["food", "entries", currentDate, userId],
-      });
-    },
-  });
-
-  const updateDailySummary = useMutation({
-    mutationFn: updateTotalCaloriesForDay,
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["food", "daily", currentDate, userId],
-      });
-    },
-  });
+  const mutation = useAddFoodEntry(userId);
+  const updateDailySummary = useUpdateTotalCaloriesForDay(userId);
 
   const handleAddFood = async () => {
     resetFoodPageState();

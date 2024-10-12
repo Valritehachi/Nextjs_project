@@ -1,4 +1,4 @@
-import { useAppSelector } from "../hooks";
+import { useAppSelector } from "../../store/hooks";
 
 const useFood = () => {
   const currentFood = useAppSelector((state) => state.foodPage.currentFood);
@@ -16,6 +16,8 @@ const useFood = () => {
 
   const currentPhoto = useAppSelector((state) => state.foodPage.currentPhoto);
 
+  const currentDate = useAppSelector((state) => state.foodPage.currentDate);
+
   return {
     currentFood,
     currentQuantity,
@@ -24,6 +26,7 @@ const useFood = () => {
     totalCalories,
     foodType,
     currentPhoto,
+    currentDate,
   };
 };
 
