@@ -35,9 +35,14 @@ export default function Home() {
         className="h-screen flex flex-col justify-center items-center bg-gray-100"
         style={{
           backgroundImage: `url(${aboutimage.src})`,
+          backgroundSize: 'cover',
+          // backgroundPosition: 'center',
+          // backgroundRepeat: 'no-repeat',
+          width: '100vw',
+          height: '100vh',
         }}
       >
-        <div className="max-w-4xl text-center p-8 bg-white rounded-md shadow-lg">
+        <div className="relative z-10 max-w-4xl text-center p-8 text-white border-4 border-white rounded-3xl ml-96">
           <h2 className="text-5xl font-bold mb-8">ABOUT US</h2>
           <p className="text-xl mb-4">
             Born from a passion for wellness and optimal living, PlatePlan
@@ -55,7 +60,7 @@ export default function Home() {
             habits, helping you achieve your wellness goals while adapting to
             the demands of a changing world.
           </p>
-          <p className="text-xl">
+          <p className="text-xl mb-4">
             At PlatePlan, we believe that proper nutrition is the key to
             unlocking your full potential, creating a healthier and more vibrant
             future for all.
