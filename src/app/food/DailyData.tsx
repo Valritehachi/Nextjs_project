@@ -5,6 +5,7 @@ import useFood from "@/hooks/food/useFood";
 import { format, formatRelative } from "date-fns";
 import { useMemo } from "react";
 import AddFood from "./AddFood";
+import useRelativeDate from "@/hooks/date/useDateDifference";
 
 const DailyData: React.FC = () => {
   const today = new Date().toLocaleDateString();
@@ -26,15 +27,15 @@ const DailyData: React.FC = () => {
     [consumedWater]
   );
 
+  const relativeDate = useRelativeDate(currentDate);
+
   return (
     <div>
       <div className="flex gap-2">
         <h3 className="scroll-m-20 text-2xl pl-2 font-semibold tracking-tight">
-          {today === currentDate
-            ? "Today"
-            : formatRelative(new Date(currentDate), new Date())}
+          {relativeDate.currentRelativeDate}
         </h3>
-        <AddFood />
+        {relativeDate.isPast && <AddFood />}
       </div>
       <div className="flex gap-4 flex-col w-full">
         <div>

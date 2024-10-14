@@ -21,16 +21,15 @@ const PickDate: React.FC = () => {
   const today = new Date().toLocaleDateString();
   const { currentDate } = useFood();
   const { updateCurrentDate } = useFoodActions();
-  const [date, setDate] = useState<string>(currentDate);
-  const todayBadge = today === date;
+  const todayBadge = today === currentDate;
 
   const handleDatePick = (date: Date | undefined) => {
     if (!date) return;
-    setDate(date.toLocaleDateString());
+    updateCurrentDate(date.toLocaleDateString());
   };
 
   const handleDateChange = (days: number) => {
-    setDate((prev) => addDays(prev, days).toLocaleDateString());
+    const date = addDays(new Date(currentDate), days).toLocaleDateString();
     updateCurrentDate(date);
   };
 
@@ -66,9 +65,8 @@ const PickDate: React.FC = () => {
         <PopoverContent className="w-auto p-0" align="start">
           <Calendar
             mode="single"
-            selected={new Date(date)}
+            selected={new Date(currentDate)}
             onSelect={handleDatePick}
-            initialFocus
           />
         </PopoverContent>
       </Popover>
