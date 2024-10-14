@@ -13,7 +13,7 @@ const Navbar: React.FC = () => {
           </h3>
 
           <Button variant={"link"} className="text-accent-foreground">
-            <Link href="/">About us</Link>
+            <Link href="#about">About us</Link>
           </Button>
         </div>
         <div className="flex gap-4 ">
