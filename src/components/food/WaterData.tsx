@@ -9,12 +9,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useUpdateTotalWaterForDay } from "@/hooks/db/dailySummaryDataHooks";
 import { useAddWaterEntry } from "@/hooks/db/waterDataHooks";
-import useFood from "@/hooks/food/useFood";
+import { useCurrentDate, useIsPast, useUserId } from "@/hooks/food/useFood";
 import { useRef } from "react";
 
 const WaterData: React.FC = () => {
   const inputRef = useRef<HTMLInputElement>(null);
-  const { userId, currentDate } = useFood();
+  const isPast = useIsPast();
+  const currentDate = useCurrentDate();
+  const userId = useUserId();
 
   const addWaterMutation = useAddWaterEntry();
   const updateDailySummaryWaterMutation = useUpdateTotalWaterForDay();
@@ -32,7 +34,7 @@ const WaterData: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className="p-2">
       <Accordion type="single" collapsible>
         <AccordionItem value="water">
           <AccordionTrigger>Water</AccordionTrigger>
@@ -40,7 +42,16 @@ const WaterData: React.FC = () => {
             <div className="flex w-full gap-2 flex-col sm:flex-row ">
               <div className="flex gap-1">
                 <Input ref={inputRef} type="number" placeholder="ml" />
-                <Button onClick={handleAddWater}>Add</Button>
+                <Button
+                  onClick={handleAddWater}
+                  disabled={
+                    !isPast ||
+                    addWaterMutation.isPending ||
+                    updateDailySummaryWaterMutation.isPending
+                  }
+                >
+                  Add
+                </Button>
               </div>
 
               <div className=""></div>

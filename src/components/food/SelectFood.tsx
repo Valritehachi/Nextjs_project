@@ -12,15 +12,24 @@ import {
 import { Input } from "@/components/ui/input";
 import { FormEvent } from "react";
 
-import useFood from "@/hooks/food/useFood";
 import useFoodActions from "@/hooks/food/useFoodActions";
 import useHandleSelectChange from "@/hooks/food/useCalculateCalories";
 import { useSearchNatural } from "@/hooks/api/useSearchNatural";
+import {
+  useCurrentCalories,
+  useCurrentFood,
+  useCurrentQuantity,
+  useTotalCalories,
+} from "@/hooks/food/useFood";
 
 const SelectFood: React.FC = () => {
-  const { currentFood, currentQuantity, currentCalories } = useFood();
+  const currentFood = useCurrentFood();
+  const currentQuantity = useCurrentQuantity();
+  const totalCalories = useTotalCalories();
+  const currentCalories = useCurrentCalories();
 
-  const { updateCurrentQuantity } = useFoodActions();
+  console.log(currentFood);
+  const { updateCurrentQuantity, updateTotalCalories } = useFoodActions();
 
   const searchNaturalData = useSearchNatural(currentFood);
 
@@ -28,6 +37,7 @@ const SelectFood: React.FC = () => {
 
   const handleQuantityChange = (e: FormEvent<HTMLInputElement>) => {
     updateCurrentQuantity(Number(e.currentTarget.value));
+    updateTotalCalories(currentCalories * Number(e.currentTarget.value));
   };
 
   return (
@@ -83,7 +93,7 @@ const SelectFood: React.FC = () => {
                     </div>
                   )}
                   <div className="flex flex-col justify-center items-center">
-                    <p className="font-bold text-xl">{currentCalories}</p>
+                    <p className="font-bold text-xl">{totalCalories}</p>
                     <p>Cal</p>
                   </div>
                 </div>

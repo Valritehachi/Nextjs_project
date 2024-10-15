@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import useFood from "../food/useFood";
+import  { useCurrentDate, useUserId } from "../food/useFood";
 import {
   addFoodEntry,
   deleteFoodEntry,
@@ -8,14 +8,14 @@ import {
 } from "@/utils/db/foodTableUtils";
 
 const useQueryKey = (today?: boolean) => {
-  const userId = useFood().userId;
+  const userId = useUserId();
   const date = useDate(today);
 
   return ["food", "query", date, userId];
 };
 
 const useDate = (today?: boolean) => {
-  const { currentDate } = useFood();
+  const currentDate = useCurrentDate();
   return today ? new Date().toLocaleDateString() : currentDate;
 };
 
@@ -31,8 +31,8 @@ const useInvalidateDailyQueries = (today?: boolean) => {
 
 export const useGetFoodEntriesByDay = (today?: boolean) => {
   const queryKey = useQueryKey(today);
+  const userId = useUserId();
   const date = useDate(today);
-  const userId = useFood().userId;
   return useQuery({
     queryFn: () => getFoodEntriesByDay({ date, userId }),
     queryKey,

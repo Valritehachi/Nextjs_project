@@ -3,7 +3,6 @@ import { Accordion } from "@/components/ui/accordion";
 
 import FoodTypeData from "./FoodTypeData";
 import { useGetFoodEntriesByDay } from "@/hooks/db/foodDataHooks";
-import useFood from "@/hooks/food/useFood";
 
 const ShowFoods: React.FC = () => {
   const foodData = useGetFoodEntriesByDay();
@@ -23,10 +22,12 @@ const ShowFoods: React.FC = () => {
         Food data
       </h3>
       <Accordion type="single" collapsible className="w-full">
-        <FoodTypeData foodData={breakfastData} type={"Breakfast"} />
-        <FoodTypeData foodData={lunchData} type={"Lunch"} />
-        <FoodTypeData foodData={dinnerData} type={"Dinner"} />
-        <FoodTypeData foodData={snackData} type={"Snack"} />
+        <div className="flex flex-col gap-2">
+          <FoodTypeData foodData={breakfastData} type={"Breakfast"} />
+          <FoodTypeData foodData={lunchData} type={"Lunch"} />
+          <FoodTypeData foodData={dinnerData} type={"Dinner"} />
+          <FoodTypeData foodData={snackData} type={"Snack"} />
+        </div>
       </Accordion>
     </div>
   );

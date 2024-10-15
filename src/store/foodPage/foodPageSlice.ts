@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface FoodPageState {
   currentFood: string;
-  currentAltnative: string;
+  currentAlternative: string;
   currentCalories: number;
   totalCalories: number;
   currentQuantity: number;
@@ -16,7 +16,7 @@ export type CurrentFoodType = "breakfast" | "lunch" | "dinner" | "snack";
 
 const initialState: FoodPageState = {
   currentFood: "",
-  currentAltnative: "",
+  currentAlternative: "",
   currentCalories: 0,
   totalCalories: 0,
   currentQuantity: 1,
@@ -43,7 +43,7 @@ const foodPageSlice = createSlice({
       state.foodType = action.payload;
     },
     setCurrentAlternative: (state, action: PayloadAction<string>) => {
-      state.currentAltnative = action.payload;
+      state.currentAlternative = action.payload;
     },
     setTotalCalories: (state, action: PayloadAction<number>) => {
       state.totalCalories = action.payload;
@@ -59,7 +59,11 @@ const foodPageSlice = createSlice({
     },
 
     resetState: (state) => {
-      state = initialState;
+      return {
+        ...initialState,
+        userId: state.userId,
+        currentDate: state.currentDate,
+      };
     },
   },
 });

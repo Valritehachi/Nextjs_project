@@ -10,15 +10,16 @@ import FoodType from "./FoodType";
 import { Button } from "@/components/ui/button";
 import SaveFood from "./SaveFood";
 import FoodCard from "./FoodCard";
-import useFood from "@/hooks/food/useFood";
+import { format } from "date-fns";
+import { useCurrentDate } from "@/hooks/food/useFood";
 
 const AddFood: React.FC<{ today?: boolean }> = ({ today }) => {
   const currentToday = new Date().toLocaleDateString();
-  const { currentDate } = useFood();
+  const currentDate = useCurrentDate();
   const isToday = currentDate === currentToday;
   let buttonText: string = "Add food";
   if (!isToday && today) {
-    buttonText = "Add food for " + currentToday;
+    buttonText = "Add food for " + format(currentToday, "PPPP");
   }
 
   return (

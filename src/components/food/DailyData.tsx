@@ -1,16 +1,19 @@
 "use client";
 import { Progress } from "@/components/ui/progress";
 import { useGetDailyEntriesByDay } from "@/hooks/db/dailySummaryDataHooks";
-import useFood from "@/hooks/food/useFood";
-import { format, formatRelative } from "date-fns";
 import { useMemo } from "react";
 import AddFood from "./AddFood";
 import useRelativeDate from "@/hooks/date/useDateDifference";
+import { useCurrentDate, useIsPast } from "@/hooks/food/useFood";
+import { cn } from "@/lib/utils";
 
 const DailyData: React.FC = () => {
   const today = new Date().toLocaleDateString();
-  const { currentDate } = useFood();
+  const currentDate = useCurrentDate();
+  const isPast = useIsPast();
   const dailyData = useGetDailyEntriesByDay();
+
+  const showAddFood = currentDate !== today && isPast;
 
   const requiredCalories = 2000;
   const consumedCalories = dailyData.data?.[0]?.totalCalories ?? 0;
@@ -18,14 +21,26 @@ const DailyData: React.FC = () => {
   const requiredWater = 2000;
   const consumedWater = dailyData.data?.[0]?.totalWater ?? 0;
 
-  const progress = useMemo(
-    () => (consumedCalories / requiredCalories) * 100,
-    [consumedCalories]
-  );
-  const waterProgress = useMemo(
-    () => (consumedWater / requiredWater) * 100,
-    [consumedWater]
-  );
+  let calorieProgres: number = 0;
+  let waterProgress: number = 0;
+
+  const isCaloriesAbove = consumedCalories - requiredCalories > 0;
+
+  if (isCaloriesAbove) {
+    const caloriesAbove = consumedCalories - requiredCalories;
+    calorieProgres = (caloriesAbove / requiredCalories) * 100;
+  } else {
+    calorieProgres = (consumedCalories / requiredCalories) * 100;
+  }
+
+  const isWaterAbove = consumedWater - requiredWater > 0;
+
+  if (isWaterAbove) {
+    const waterAbove = consumedWater - requiredWater;
+    waterProgress = (waterAbove / requiredWater) * 100;
+  } else {
+    waterProgress = (consumedWater / requiredWater) * 100;
+  }
 
   const relativeDate = useRelativeDate(currentDate);
 
@@ -33,9 +48,9 @@ const DailyData: React.FC = () => {
     <div>
       <div className="flex gap-2">
         <h3 className="scroll-m-20 text-2xl pl-2 font-semibold tracking-tight">
-          {relativeDate.currentRelativeDate}
+          {relativeDate}
         </h3>
-        {relativeDate.isPast && <AddFood />}
+        {showAddFood && <AddFood />}
       </div>
       <div className="flex gap-4 flex-col w-full">
         <div>
@@ -44,7 +59,10 @@ const DailyData: React.FC = () => {
           </h4>
           <div className="flex flex-col gap-2">
             <div className="w-full">
-              <Progress value={progress} className="w-full h-4" />
+              <Progress
+                value={calorieProgres}
+                className={cn("w-full h-4", isCaloriesAbove && "bg-red-500")}
+              />
             </div>
             <div className="flex justify-between">
               <div className="flex gap-2">
@@ -52,9 +70,13 @@ const DailyData: React.FC = () => {
                 <p className="text-sm"> Cal Intake</p>
               </div>
               <div className="flex gap-2">
-                <p className="text-sm">Cal remaining </p>
+                <p className="text-sm">
+                  {isCaloriesAbove ? "Cal exceeded " : "Cal remaining "}
+                </p>
                 <p className="text-sm font-bold">
-                  {requiredCalories - consumedCalories}
+                  {isCaloriesAbove
+                    ? Math.abs(requiredCalories - consumedCalories)
+                    : requiredCalories - consumedCalories}
                 </p>
               </div>
               <div className="flex gap-2">
@@ -70,7 +92,10 @@ const DailyData: React.FC = () => {
           </h4>
           <div className="flex flex-col gap-2">
             <div className="w-full">
-              <Progress value={waterProgress} className="w-full h-4" />
+              <Progress
+                value={waterProgress}
+                className={cn("w-full h-4", isWaterAbove && "bg-green-500 ")}
+              />
             </div>
             <div className="flex justify-between">
               <div className="flex gap-2">
@@ -78,9 +103,13 @@ const DailyData: React.FC = () => {
                 <p className="text-sm"> Water Intake</p>
               </div>
               <div className="flex gap-2">
-                <p className="text-sm">Water intake </p>
+                <p className="text-sm">
+                  {isWaterAbove ? "Water exceeded " : "Water remaining "}
+                </p>
                 <p className="text-sm font-bold">
-                  {requiredWater - consumedWater}
+                  {isWaterAbove
+                    ? Math.abs(requiredWater - consumedWater)
+                    : requiredWater - consumedWater}
                 </p>
               </div>
               <div className="flex gap-2">
