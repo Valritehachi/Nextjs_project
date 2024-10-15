@@ -68,6 +68,7 @@ const BodyCompositionPage: React.FC = () => {
     typeof parseWeightLossData
   > | null>(null);
   const [limit, setLimit] = useState<number>(0);
+  const [waterIntake, setWaterIntake] = useState<number>(0);
   const form = useForm<getCaloriesType>({
     defaultValues: {
       activity: "BMR",
@@ -150,7 +151,6 @@ const BodyCompositionPage: React.FC = () => {
               </div>
 
               <BodyCompositionActivityInput control={form.control}/>
-
               
               <div className="flex justify-between">
                 <Button
@@ -207,16 +207,32 @@ const BodyCompositionPage: React.FC = () => {
               </div>
             </div>
           </div>
-          <div className="">
-            <div className="ring ring-black rounded-md flex flex-col gap-4 p-4">
-              <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl text-center">
-                Daily calorie limit
+          <div className="ring ring-black rounded-md flex flex-col gap-4 p-4">
+            <div className="flex items-center justify-between">
+              <h1 className="text-2xl font-extrabold tracking-tight">
+                Daily Calorie Limit
               </h1>
               <Input
                 type="number"
                 value={limit}
                 onChange={(e) => setLimit(Number(e.target.value))}
+                className="w-1/2"
               />
+            </div>
+
+            <div className="flex items-center justify-between">
+              <h1 className="text-2xl font-extrabold tracking-tight">
+                Water Intake (ml)
+              </h1>
+              <Input
+                type="number"
+                value={waterIntake}
+                onChange={(e) => setWaterIntake(Number(e.target.value))}
+                className="w-1/2"  
+                placeholder="Enter water intake in ml"
+              />
+            </div>
+            <div className="flex justify-center mt-4">
               <Button>Save</Button>
             </div>
           </div>
