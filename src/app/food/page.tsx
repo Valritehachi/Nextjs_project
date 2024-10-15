@@ -9,7 +9,7 @@ import SetUserId from "./setUserId";
 const FoodPage = async () => {
   const userId = await getUserId();
   return (
-    <div className="flex flex-col gap-4 p-2 min-h-full">
+    <div className="flex flex-col gap-4 p-2 h-full">
       <SetUserId userId={userId} />
       <AddFood today />
       <PickDate />
