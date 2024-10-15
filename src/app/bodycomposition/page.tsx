@@ -101,52 +101,53 @@ const BodyCompositionPage: React.FC = () => {
                 Body Composition
               </h1>
               <BodyCompositionGenderInput control={form.control}/>
-              <BodyCompositionSizeInput control={form.control}/>
-              <BodyCompositionAgeInput control={form.control}/>
-
+              <BodyCompositionSizeInput control={form.control} />
               
+              <div className="grid grid-cols-2 gap-4">
+                {/* First two elements, side by side */}
+                <BodyCompositionAgeInput control={form.control} />
 
-              <FormField
-                control={form.control}
-                name="weight"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      Weight ({values.imperial ? "lbs" : "kg"})
-                    </FormLabel>
-                    <FormControl>
-                      <Input type="number" {...field} />
-                    </FormControl>
-                    <FormDescription>
-                      This is your weight in {values.imperial ? "lbs" : "kg"}.
-                    </FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              
-              {!values.imperial ? (
                 <FormField
                   control={form.control}
-                  name="height"
+                  name="weight"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Height (cm)</FormLabel>
+                      <FormLabel>Weight ({values.imperial ? "lbs" : "kg"})</FormLabel>
                       <FormControl>
                         <Input type="number" {...field} />
                       </FormControl>
                       <FormDescription>
-                        This is your height in cm.
+                        This is your weight in {values.imperial ? "lbs" : "kg"}.
                       </FormDescription>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
-              ) : (
-                <div className="grid gap-2 sm:grid-cols-2 grid-cols-1 ">
-                  <BodyCompositionHeightInput control={form.control} />
-                </div>
-              )}
+
+                {/* Third element, below the first two on the left */}
+                {!values.imperial ? (
+                  <FormField
+                    control={form.control}
+                    name="height"
+                    render={({ field }) => (
+                      <FormItem className="col-span-2">
+                        <FormLabel>Height (cm)</FormLabel>
+                        <FormControl>
+                          <Input type="number" {...field} />
+                        </FormControl>
+                        <FormDescription>
+                          This is your height in cm.
+                        </FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                ) : (
+                  <div className="grid gap-2 sm:grid-cols-2 grid-cols-1 col-span-2">
+                    <BodyCompositionHeightInput control={form.control} />
+                  </div>
+                )}
+              </div>
 
               <BodyCompositionActivityInput control={form.control}/>
 

@@ -25,7 +25,7 @@ const BodyCompositionGenderInput = ({ control }:BodyCompositionGenderInputProps)
                     <RadioGroup
                     onValueChange={field.onChange}
                     defaultValue={field.value}
-                    className="flex justify-center gap-6 py-4"
+                    className="flex justify-start gap-6 py-4"
                     >
                     <FormItem className="flex items-center space-x-2 space-y-0">
                         <FormControl>
