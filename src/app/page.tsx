@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Image from "next/image";
 import logo from "./../../public/landing-photo.jpeg";
@@ -8,7 +9,7 @@ export default function Home() {
   return (
     <div>
       {/* Home */}
-      <div className="h-screen grid lg:grid-cols-2 grid-cols-1 gap-2 h-full">
+      <div className="h-screen grid lg:grid-cols-2 grid-cols-1 gap-2 ">
         <div className=" flex flex-col  gap-4 items-center justify-center h-full">
           <h1 className="scroll-m-0 text-7xl font-extrabold tracking-tight lg:text-8xl ">
             Plate Plan
@@ -16,7 +17,10 @@ export default function Home() {
           <h3 className="scroll-m-0 text-2xl  tracking-tight italic">
             Eat Well, Feel Great
           </h3>
-          <Button className="lg:mt-40">Start Now</Button>
+          <Link href="/signin">
+            <Button className="lg:mt-40">Start Now</Button>  
+          </Link>
+          
           {/* Scroll Button */}
         </div>
         <div className="flex items-center   justify-center">
@@ -39,7 +43,7 @@ export default function Home() {
           // backgroundPosition: 'center',
           // backgroundRepeat: 'no-repeat',
           width: '100vw',
-          height: '100vh',
+          
         }}
       >
         <div className="relative z-10 max-w-4xl text-center p-8 text-white border-4 border-white rounded-3xl ml-96">
