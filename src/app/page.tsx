@@ -47,7 +47,7 @@ export default function Home() {
           <h1 className="scroll-m-0 text-7xl font-extrabold tracking-tight lg:text-8xl ">
             Plate Plan
           </h1>
-          <h3 className="scroll-m-0 text-2xl  tracking-tight italic">
+          <h3 className="scroll-m-0 text-2xl tracking-tight" style={{ fontStyle: "italic !important" }}>
             Eat Well, Feel Great
           </h3>
           <Link href="/signin">
