@@ -1,9 +1,10 @@
 "use server";
 import { db } from "@/db/db";
 import { DailySummaryInsert, dailySummaryTable, foodTable } from "@/db/schema";
-import { and, eq } from "drizzle-orm";
+import { and, between, eq, gte } from "drizzle-orm";
 import { getWaterEntriesByDay } from "./waterTableUtils";
 import { getFoodEntriesByDay } from "./foodTableUtils";
+import { subDays } from "date-fns";
 
 interface DailySummaryParams {
   date: DailySummaryInsert["date"];
@@ -100,6 +101,25 @@ export const getDailySummaryByDay = async ({
     .where(
       and(
         eq(dailySummaryTable.date, date),
+        eq(dailySummaryTable.userId, userId)
+      )
+    );
+};
+
+export const getDailySummaryByWeek = async ({
+  userId,
+}: {
+  userId: DailySummaryInsert["userId"];
+}) => {
+  const date = new Date();
+  const startDate = subDays(date, 7);
+
+  return await db
+    .select()
+    .from(dailySummaryTable)
+    .where(
+      and(
+        gte(dailySummaryTable.date, startDate.toLocaleDateString()),
         eq(dailySummaryTable.userId, userId)
       )
     );

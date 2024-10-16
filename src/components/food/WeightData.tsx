@@ -34,9 +34,6 @@ const WeightData: React.FC = () => {
     });
   };
 
-  const weightData = useGetWeightEntry();
-  console.log(weightData.data);
-
   return (
     <div className="p-2">
       <Accordion type="single" collapsible>
