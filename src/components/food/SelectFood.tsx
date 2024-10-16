@@ -28,7 +28,6 @@ const SelectFood: React.FC = () => {
   const totalCalories = useTotalCalories();
   const currentCalories = useCurrentCalories();
 
-  console.log(currentFood);
   const { updateCurrentQuantity, updateTotalCalories } = useFoodActions();
 
   const searchNaturalData = useSearchNatural(currentFood);

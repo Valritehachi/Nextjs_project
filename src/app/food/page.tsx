@@ -5,6 +5,7 @@ import AddFood from "@/components/food/AddFood";
 import SetUserId from "@/components/food/setUserId";
 import ShowFoods from "@/components/food/ShowFoods";
 import dynamic from "next/dynamic";
+import WeightData from "@/components/food/WeightData";
 
 const PickDate = dynamic(() => import("@/components/food/PickDate"), {
   ssr: false,
@@ -24,6 +25,7 @@ const FoodPage = async () => {
         <DailyData />
         <ShowFoods />
         <WaterData />
+        <WeightData />
       </div>
     </div>
   );

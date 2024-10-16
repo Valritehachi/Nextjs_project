@@ -1,7 +1,7 @@
 "use server";
 import { db } from "@/db/db";
 import { weightTable, type WeightInsert, type WeightSelect } from "@/db/schema";
-import { and, eq } from "drizzle-orm";
+import { and, eq, gte, lt, lte } from "drizzle-orm";
 
 interface GetWeightEntryParams {
   userId: WeightSelect["userId"];
@@ -25,6 +25,23 @@ export const getWeightEntry = async ({ userId }: GetWeightEntryParams) => {
     .select()
     .from(weightTable)
     .where(and(eq(weightTable.userId, userId)));
+};
+
+export const getWeightEntriesForWeek = async (
+  userId: string,
+  startDate: Date,
+  endDate: Date
+) => {
+  return await db
+    .select()
+    .from(weightTable)
+    .where(
+      and(
+        eq(weightTable.userId, userId),
+        gte(weightTable.date, startDate),
+        lte(weightTable.date, endDate)
+      )
+    );
 };
 
 export const updateWeightEntry = async ({

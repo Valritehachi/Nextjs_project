@@ -50,7 +50,7 @@ export const hydrationTable = pgTable("hydration_table", {
 
 export const dailySummaryTable = pgTable("daily_summary_table", {
   id: serial("id").primaryKey(),
-  date: date("date").unique().notNull(),
+  date: date("date").notNull(),
   userId: text("user_id").notNull(),
   totalCalories: integer("total_calories").notNull().default(0),
   totalWater: integer("total_water").notNull().default(0),
