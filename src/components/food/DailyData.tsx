@@ -6,41 +6,29 @@ import AddFood from "./AddFood";
 import useRelativeDate from "@/hooks/date/useDateDifference";
 import { useCurrentDate, useIsPast } from "@/hooks/food/useFood";
 import { cn } from "@/lib/utils";
+import { useAddUserEntry, useGetUserEntry } from "@/hooks/db/userDataHooks";
 
 const DailyData: React.FC = () => {
   const today = new Date().toLocaleDateString();
   const currentDate = useCurrentDate();
   const isPast = useIsPast();
+
   const dailyData = useGetDailyEntriesByDay();
+  const userData = useGetUserEntry();
 
   const showAddFood = currentDate !== today && isPast;
 
-  const requiredCalories = 2000;
-  const consumedCalories = dailyData.data?.[0]?.totalCalories ?? 0;
+  const requiredCalories = userData.data?.[0]?.preferredCalories ?? 0;
+  const requiredWater = userData.data?.[0]?.preferredWater ?? 0;
 
-  const requiredWater = 2000;
+  const consumedCalories = dailyData.data?.[0]?.totalCalories ?? 0;
   const consumedWater = dailyData.data?.[0]?.totalWater ?? 0;
 
-  let calorieProgres: number = 0;
-  let waterProgress: number = 0;
+  let calorieProgress = (consumedCalories / requiredCalories) * 100;
+  let waterProgress = (consumedWater / requiredWater) * 100;
 
   const isCaloriesAbove = consumedCalories - requiredCalories > 0;
-
-  if (isCaloriesAbove) {
-    const caloriesAbove = consumedCalories - requiredCalories;
-    calorieProgres = (caloriesAbove / requiredCalories) * 100;
-  } else {
-    calorieProgres = (consumedCalories / requiredCalories) * 100;
-  }
-
   const isWaterAbove = consumedWater - requiredWater > 0;
-
-  if (isWaterAbove) {
-    const waterAbove = consumedWater - requiredWater;
-    waterProgress = (waterAbove / requiredWater) * 100;
-  } else {
-    waterProgress = (consumedWater / requiredWater) * 100;
-  }
 
   const relativeDate = useRelativeDate(currentDate);
 
@@ -60,7 +48,7 @@ const DailyData: React.FC = () => {
           <div className="flex flex-col gap-2">
             <div className="w-full">
               <Progress
-                value={calorieProgres}
+                value={isCaloriesAbove ? 0 : calorieProgress}
                 className={cn("w-full h-4", isCaloriesAbove && "bg-red-500")}
               />
             </div>
@@ -93,7 +81,7 @@ const DailyData: React.FC = () => {
           <div className="flex flex-col gap-2">
             <div className="w-full">
               <Progress
-                value={waterProgress}
+                value={isWaterAbove ? 0 : waterProgress}
                 className={cn("w-full h-4", isWaterAbove && "bg-green-500 ")}
               />
             </div>

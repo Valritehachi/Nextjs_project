@@ -37,3 +37,18 @@ export const updateUserEntry = async ({
 export const deleteUserEntry = async ({ userId }: DeleteEntryParams) => {
   await db.delete(userTable).where(eq(userTable.userId, userId));
 };
+
+export const createOrUpdateUserEntry = async ({
+  userId,
+  ...update
+}: UserInsert) => {
+  const existingEntry = await getUserEntry({ userId });
+
+  if (existingEntry.length > 0) {
+    // Update the existing entry
+    await updateUserEntry({ userId, update });
+  } else {
+    // Create a new entry
+    await addUserEntry({ userId, ...update });
+  }
+};

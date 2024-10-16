@@ -4,6 +4,7 @@ interface BodyPageState {
   caloriesLimit: number;
   currentBodyCalories: number;
   waterIntakeLimit: number;
+  weightDifferencePerWeek: number;
   userId: string;
 }
 
@@ -11,6 +12,7 @@ const initialState: BodyPageState = {
   caloriesLimit: 0,
   currentBodyCalories: 0,
   waterIntakeLimit: 0,
+  weightDifferencePerWeek: 0,
   userId: "",
 };
 
@@ -30,6 +32,9 @@ const bodyPageSlice = createSlice({
     setCurrentBodyCalories: (state, action: PayloadAction<number>) => {
       state.currentBodyCalories = action.payload;
     },
+    setWeightDifferencePerWeek: (state, action: PayloadAction<number>) => {
+      state.weightDifferencePerWeek = action.payload;
+    },
 
     resetState: (state) => {
       return {
@@ -45,6 +50,7 @@ export const {
   setWaterIntakeLimit,
   setCurrentUserId,
   setCurrentBodyCalories,
+  setWeightDifferencePerWeek,
   resetState,
 } = bodyPageSlice.actions;
 
