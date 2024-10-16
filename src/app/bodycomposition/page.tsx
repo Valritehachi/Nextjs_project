@@ -10,25 +10,27 @@ import { getUserId } from "@/utils/auth/getUserId";
 const BodyCompositionPage: React.FC = async () => {
   const userId = await getUserId();
   return (
-    <div className="container mx-auto grid grid-cols-1 sm:grid-cols-2 gap-2">
-      <div>
-        <SetUserId userId={userId} />
-        <Tabs defaultValue="metric" className="w-full">
-          <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="metric">Metric</TabsTrigger>
-            <TabsTrigger value="imperial">Imperial</TabsTrigger>
-          </TabsList>
-          <TabsContent value="metric">
-            <MetricInputs />
-          </TabsContent>
-          <TabsContent value="imperial">
-            <ImperialInputs />
-          </TabsContent>
-        </Tabs>
-      </div>
-      <div className="flex flex-col gap-2">
-        <CalorieDetails />
-        <SetDetails />
+    <div className="h-full w-full flex items-center justify-center">
+      <div className="container mx-auto grid grid-cols-1 sm:grid-cols-2 gap-2 p-4">
+        <div>
+          <SetUserId userId={userId} />
+          <Tabs defaultValue="metric" className="w-full">
+            <TabsList className="grid w-full grid-cols-2">
+              <TabsTrigger value="metric">Metric</TabsTrigger>
+              <TabsTrigger value="imperial">Imperial</TabsTrigger>
+            </TabsList>
+            <TabsContent value="metric">
+              <MetricInputs />
+            </TabsContent>
+            <TabsContent value="imperial">
+              <ImperialInputs />
+            </TabsContent>
+          </Tabs>
+        </div>
+        <div className="flex flex-col gap-2">
+          <CalorieDetails />
+          <SetDetails />
+        </div>
       </div>
     </div>
   );

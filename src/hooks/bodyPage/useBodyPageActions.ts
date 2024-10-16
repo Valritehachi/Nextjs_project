@@ -1,9 +1,11 @@
 import { useAppDispatch } from "@/store/hooks";
 import {
+  resetState,
   setCaloriesLimit,
   setCurrentBodyCalories,
   setCurrentUserId,
   setWaterIntakeLimit,
+  setWeightDifferencePerWeek,
 } from "@/store/bodyPage/bodyPageSlice";
 
 const useBodyPageActions = () => {
@@ -23,12 +25,21 @@ const useBodyPageActions = () => {
   const updateWaterIntakeLimit = (ml: number) => {
     dispatch(setWaterIntakeLimit(ml));
   };
+  const updateWeightDifferencePerWeek = (kg: number) => {
+    dispatch(setWeightDifferencePerWeek(kg));
+  };
+
+  const resetBodyPageState = () => {
+    dispatch(resetState());
+  };
 
   return {
     updateCurrentBodyPageUserId,
     updateCaloriesLimit,
     updateWaterIntakeLimit,
     updateCurrentBodyCalories,
+    updateWeightDifferencePerWeek,
+    resetBodyPageState,
   };
 };
 

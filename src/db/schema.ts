@@ -58,13 +58,11 @@ export const dailySummaryTable = pgTable("daily_summary_table", {
 });
 
 export const userTable = pgTable("user_table", {
-  userId: text("user_id").primaryKey().notNull(),
-  weight: integer("weight"),
-  height: integer("height"),
-  age: integer("age"),
-  gender: genderTypeEnum("gender"),
+  userId: text("user_id").primaryKey().notNull().unique(),
   preferredCalories: integer("preferred_calories").default(0),
+  bodyCalories: integer("body_calories").default(0),
   preferredWater: integer("preferred_water").default(0),
+  weightDifferencePerWeek: integer("weight_difference_per_week").default(0),
   createdAt: timestamp("created_at").default(new Date()),
 });
 

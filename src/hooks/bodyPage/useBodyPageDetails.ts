@@ -15,3 +15,7 @@ export const useCurrentBodyCalories = () => {
 export const useBodyPageUserId = () => {
   return useAppSelector((state) => state.bodyPage.userId);
 };
+
+export const useWeightDifferencePerWeek = () => {
+  return useAppSelector((state) => state.bodyPage.weightDifferencePerWeek);
+};

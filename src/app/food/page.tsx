@@ -13,16 +13,18 @@ const PickDate = dynamic(() => import("@/components/food/PickDate"), {
 const FoodPage = async () => {
   const userId = await getUserId();
   return (
-    <div
-      className=" container mx-auto flex flex-col gap-4 p-2 h-full"
-      suppressHydrationWarning
-    >
+    <div className="h-full w-full flex items-center justify-center">
       <SetUserId userId={userId} />
-      <AddFood today />
-      <PickDate />
-      <DailyData />
-      <ShowFoods />
-      <WaterData />
+      <div
+        className=" container mx-auto flex flex-col gap-4 p-4 "
+        suppressHydrationWarning
+      >
+        <AddFood today />
+        <PickDate />
+        <DailyData />
+        <ShowFoods />
+        <WaterData />
+      </div>
     </div>
   );
 };
