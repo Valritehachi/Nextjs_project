@@ -4,16 +4,39 @@ import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Image from "next/image";
 import logo from "./../../public/landing-photo.jpeg";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import aboutimage from "./../../public/about_us_image.jpg";
 import { Button } from "@/components/ui/button";
 
 export default function Home() {
   const [isImageVisible, setIsImageVisible] = useState(false);
+  const [isAboutVisible, setIsAboutVisible] = useState(false);
+  const aboutRef = useRef(null);
 
   useEffect(() => {
     const timer = setTimeout(() => setIsImageVisible(true), 100);
     return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setIsAboutVisible(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (aboutRef.current) {
+      observer.observe(aboutRef.current);
+    }
+
+    return () => {
+      if (aboutRef.current) {
+        observer.unobserve(aboutRef.current);
+      }
+    };
   }, []);
 
   return (
@@ -44,20 +67,22 @@ export default function Home() {
         </div>
       </div>
 
-      {/* About Us */}
-      <div
+     {/* About Us */}
+     <div
         id="about"
         className="h-screen flex flex-col justify-center items-center bg-gray-100"
         style={{
           backgroundImage: `url(${aboutimage.src})`,
           backgroundSize: "cover",
-          // backgroundPosition: 'center',
-          // backgroundRepeat: 'no-repeat',
-          width: '100vw',
-          
+          width: "100vw",
         }}
       >
-        <div className="relative z-10 max-w-4xl text-center p-8 text-white border-4 border-white rounded-3xl ml-96">
+        <div
+          ref={aboutRef}
+          className={`relative z-20 max-w-4xl text-center p-8 text-white border-4 border-white rounded-3xl transition-all duration-1000 ease-in-out ${
+            isAboutVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"
+          }`}
+        >
           <h2 className="text-5xl font-bold mb-8">ABOUT US</h2>
           <p className="text-xl mb-4">
             Born from a passion for wellness and optimal living, PlatePlan
