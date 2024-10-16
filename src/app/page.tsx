@@ -1,11 +1,21 @@
+"use client";
+
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Image from "next/image";
 import logo from "./../../public/landing-photo.jpeg";
+import { useState, useEffect } from "react";
 import aboutimage from "./../../public/about_us_image.jpg";
 import { Button } from "@/components/ui/button";
 
 export default function Home() {
+  const [isImageVisible, setIsImageVisible] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsImageVisible(true), 100);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <div>
       {/* Home */}
@@ -27,7 +37,9 @@ export default function Home() {
           <Image
             src={logo}
             alt="plate"
-            className="object-contain brightness-75 h-full "
+            className={`object-contain brightness-75 h-full transition-opacity duration-1000 ease-in-out ${
+              isImageVisible ? "opacity-100" : "opacity-0"
+            }`}
           />
         </div>
       </div>
