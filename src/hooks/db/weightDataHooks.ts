@@ -10,6 +10,7 @@ import {
 import { WeightInsert, WeightSelect } from "@/db/schema";
 import { useBodyPageUserId } from "../bodyPage/useBodyPageDetails";
 import { useFoodPageUserId } from "../food/useFood";
+import { subDays } from "date-fns";
 
 const useQueryKey = () => {
   const userId = useBodyPageUserId();
@@ -35,7 +36,9 @@ export const useAddWeightEntry = () => {
   });
 };
 
-export const useGetWeightEntriesForWeek = (startDate: Date, endDate: Date) => {
+export const useGetWeightEntriesForWeek = () => {
+  const startDate = new Date();
+  const endDate = subDays(startDate, 7);
   const queryKey = useQueryKey();
   const userId = useFoodPageUserId();
   return useQuery({

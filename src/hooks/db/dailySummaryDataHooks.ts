@@ -9,7 +9,6 @@ import { useCurrentDate, useFoodPageUserId } from "../food/useFood";
 const useQueryKey = (today?: boolean) => {
   const userId = useFoodPageUserId();
   const date = useDate(today);
-
   return ["dailySumary", "query", date, userId];
 };
 
@@ -53,5 +52,13 @@ export const useUpdateTotalWaterForDay = (today?: boolean) => {
   return useMutation({
     mutationFn: updateTotalWaterForDay,
     onSuccess: invalidateDailyQueries,
+  });
+};
+
+export const useGetDailyEntriesOverviewPage = (date: string) => {
+  const userId = useFoodPageUserId();
+  return useQuery({
+    queryFn: () => getDailySummaryByDay({ date, userId }),
+    queryKey: ["dailySumary", "query", date, userId],
   });
 };

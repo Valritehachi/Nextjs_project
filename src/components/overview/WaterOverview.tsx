@@ -32,14 +32,14 @@ import { useGetChartData } from "@/hooks/db/overviewHooks";
 export const description = "A bar chart for calorie intake over the past week.";
 
 const chartConfig = {
-  calories: {
-    label: "Calories",
+  water: {
+    label: "Water",
     color: "hsl(var(--chart-1))",
   },
 } satisfies ChartConfig;
 
-const CaloriesOverview = () => {
-  const chartData = useGetChartData(true);
+const WaterOverview = () => {
+  const chartData = useGetChartData(false);
 
   return (
     <Card>
@@ -61,7 +61,7 @@ const CaloriesOverview = () => {
               cursor={false}
               content={<ChartTooltipContent hideLabel />}
             />
-            <Bar dataKey="calories" fill="var(--color-calories)" radius={8} />
+            <Bar dataKey="water" fill="var(--color-water)" radius={8} />
           </BarChart>
         </ChartContainer>
       </CardContent>
@@ -74,4 +74,4 @@ const CaloriesOverview = () => {
   );
 };
 
-export default CaloriesOverview;
+export default WaterOverview;

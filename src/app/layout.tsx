@@ -37,9 +37,10 @@ export default function RootLayout({
             <ReduxProvider>
               <ReactQueryClientProvider>
                 <ReactQueryDevtools initialIsOpen={false} />
-                <div className="h-dvh bg-accent flex flex-col w-full  mx-auto">
-                  <Navbar />
-                  {children}
+                <div className="bg-accent">
+                  <div className="min-h-screen  flex flex-col w-full  mx-auto">
+                    {children}
+                  </div>
                 </div>
               </ReactQueryClientProvider>
             </ReduxProvider>

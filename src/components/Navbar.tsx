@@ -11,22 +11,19 @@ const Navbar: React.FC = () => {
           <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">
             <Link href="/">PlatePlan</Link>
           </h3>
-          <Link href="#about">
-            <Button variant={"link"} className="text-accent-foreground">
-              About us
-            </Button>
-          </Link>
+          <Button asChild variant={"link"} className="text-accent-foreground">
+            <Link href="#about">About us</Link>
+          </Button>
           <SignedIn>
-            <Link href="/food">
-              <Button variant={"link"} className="text-accent-foreground">
-                Food
-              </Button>
-            </Link>
-            <Link href="/bodycomposition">
-              <Button variant={"link"} className="text-accent-foreground">
-                Body Composition
-              </Button>
-            </Link>
+            <Button asChild variant={"link"} className="text-accent-foreground">
+              <Link href="/overview">Overview</Link>
+            </Button>
+            <Button asChild variant={"link"} className="text-accent-foreground">
+              <Link href="/food">Food</Link>
+            </Button>
+            <Button asChild variant={"link"} className="text-accent-foreground">
+              <Link href="/bodycomposition">Body Composition</Link>
+            </Button>
           </SignedIn>
         </div>
         <div className="flex gap-4 ">

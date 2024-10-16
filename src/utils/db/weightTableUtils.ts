@@ -63,8 +63,11 @@ export const createOrUpdateWeightEntry = async ({
   ...update
 }: WeightInsert) => {
   const existingEntry = await getWeightEntry({ userId });
+  const isExistingEntry = existingEntry.find(
+    (entry) => entry.date === update.date
+  );
 
-  if (existingEntry.length > 0) {
+  if (isExistingEntry) {
     // Update the existing entry
     await updateWeightEntry({ userId, update });
   } else {
