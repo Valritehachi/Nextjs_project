@@ -9,7 +9,7 @@ const OverviewPage = async () => {
   return (
     <div>
       <SetUserId userId={userId} />
-      <div className="flex flex-col gap-2 container mx-auto h-full">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 justify-center content-center container mx-auto h-full">
         <CaloriesOverview />
         <WaterOverview />
         <WeightOverview />

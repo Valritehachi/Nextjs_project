@@ -16,10 +16,7 @@ const FoodPage = async () => {
   return (
     <div className="h-full w-full flex items-center justify-center">
       <SetUserId userId={userId} />
-      <div
-        className=" container mx-auto flex flex-col gap-4 p-4 "
-        suppressHydrationWarning
-      >
+      <div className=" container h-full mx-auto flex flex-col gap-2 p-4tems-center justify-center ">
         <AddFood today />
         <PickDate />
         <DailyData />

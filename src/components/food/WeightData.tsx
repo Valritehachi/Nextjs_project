@@ -35,14 +35,14 @@ const WeightData: React.FC = () => {
   };
 
   return (
-    <div className="p-2">
+    <div className="px-2">
       <Accordion type="single" collapsible>
         <AccordionItem value="weight">
           <AccordionTrigger>Weight</AccordionTrigger>
           <AccordionContent>
             <div className="flex w-full gap-2 flex-col sm:flex-row ">
               <div className="flex gap-1">
-                <Input ref={inputRef} type="number" placeholder="ml" />
+                <Input ref={inputRef} type="number" placeholder="Kg" />
                 <Button
                   onClick={handleAddWeight}
                   disabled={!isPast || addWeightMutation.isPending}

@@ -38,7 +38,7 @@ const WaterData: React.FC = () => {
   };
 
   return (
-    <div className="p-2">
+    <div className="px-2">
       <Accordion type="single" collapsible>
         <AccordionItem value="water">
           <AccordionTrigger>Water</AccordionTrigger>

@@ -37,8 +37,9 @@ export default function RootLayout({
             <ReduxProvider>
               <ReactQueryClientProvider>
                 <ReactQueryDevtools initialIsOpen={false} />
-                <div className="bg-accent">
+                <div className="bg-accent ">
                   <div className="min-h-screen  flex flex-col w-full  mx-auto">
+                    <Navbar />
                     {children}
                   </div>
                 </div>

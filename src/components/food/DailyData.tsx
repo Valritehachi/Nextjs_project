@@ -40,7 +40,7 @@ const DailyData: React.FC = () => {
         </h3>
         {showAddFood && <AddFood />}
       </div>
-      <div className="flex gap-4 flex-col w-full">
+      <div className="flex gap-2 flex-col w-full">
         <div>
           <h4 className="scroll-m-20 text-lg text-center font-semibold tracking-tight">
             Calories
