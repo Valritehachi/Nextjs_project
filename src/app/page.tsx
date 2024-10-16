@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <div>
       {/* Home */}
-      <div className="h-screen grid lg:grid-cols-2 grid-cols-1 gap-2 ">
+      <div className="h-screen grid lg:grid-cols-2 grid-cols-1 gap-2">
         <div className=" flex flex-col  gap-4 items-center justify-center h-full">
           <h1 className="scroll-m-0 text-7xl font-extrabold tracking-tight lg:text-8xl ">
             Plate Plan
@@ -31,15 +31,14 @@ export default function Home() {
           />
         </div>
       </div>
-    
+
       {/* About Us */}
       <div
-
         id="about"
         className="h-screen flex flex-col justify-center items-center bg-gray-100"
         style={{
           backgroundImage: `url(${aboutimage.src})`,
-          backgroundSize: 'cover',
+          backgroundSize: "cover",
           // backgroundPosition: 'center',
           // backgroundRepeat: 'no-repeat',
           width: '100vw',
@@ -54,7 +53,6 @@ export default function Home() {
             lifestyle.
           </p>
           <p className="text-xl mb-4">
-
             We are dedicated to empowering individuals with the tools to take
             control of their nutrition, offering a seamless blend of
             personalized meal planning and accurate calorie tracking.

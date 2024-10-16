@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { addDays, format } from "date-fns";
 import { ArrowLeft, ArrowRight, CalendarIcon } from "lucide-react";
 
@@ -14,12 +13,12 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import useFood from "@/hooks/food/useFood";
 import useFoodActions from "@/hooks/food/useFoodActions";
+import { useCurrentDate } from "@/hooks/food/useFood";
 
 const PickDate: React.FC = () => {
   const today = new Date().toLocaleDateString();
-  const { currentDate } = useFood();
+  const currentDate = useCurrentDate();
   const { updateCurrentDate } = useFoodActions();
   const todayBadge = today === currentDate;
 
@@ -32,6 +31,8 @@ const PickDate: React.FC = () => {
     const date = addDays(new Date(currentDate), days).toLocaleDateString();
     updateCurrentDate(date);
   };
+
+  const dateText = format(new Date(currentDate), "PPPP");
 
   return (
     <div className="flex justify-between">
@@ -52,11 +53,7 @@ const PickDate: React.FC = () => {
                 !currentDate && "text-muted-foreground"
               )}
             >
-              {currentDate ? (
-                format(currentDate, "PPPP")
-              ) : (
-                <span>Pick a date</span>
-              )}
+              {dateText}
               <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
             </Button>
             {todayBadge && <Badge variant="outline">Today</Badge>}

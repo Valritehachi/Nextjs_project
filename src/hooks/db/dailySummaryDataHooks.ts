@@ -4,17 +4,17 @@ import {
   updateTotalWaterForDay,
 } from "@/utils/db/dailySummaryTableUtils";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import useFood from "../food/useFood";
+import { useCurrentDate, useFoodPageUserId } from "../food/useFood";
 
 const useQueryKey = (today?: boolean) => {
-  const userId = useFood().userId;
+  const userId = useFoodPageUserId();
   const date = useDate(today);
 
   return ["dailySumary", "query", date, userId];
 };
 
 const useDate = (today?: boolean) => {
-  const { currentDate } = useFood();
+  const currentDate = useCurrentDate();
   return today ? new Date().toLocaleDateString() : currentDate;
 };
 
@@ -31,7 +31,7 @@ const useInvalidateDailyQueries = (today?: boolean) => {
 export const useGetDailyEntriesByDay = (today?: boolean) => {
   const queryKey = useQueryKey(today);
   const date = useDate(today);
-  const userId = useFood().userId;
+  const userId = useFoodPageUserId();
   return useQuery({
     queryFn: () => getDailySummaryByDay({ date, userId }),
     queryKey,

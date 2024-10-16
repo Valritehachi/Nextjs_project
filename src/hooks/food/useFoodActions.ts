@@ -1,17 +1,17 @@
-import { useAppDispatch } from "@/store/hooks";
 import {
-  setCurrentFood,
-  setCurrentQuantity,
-  setCurrentCalories,
-  setCurrentFoodType,
-  setCurrentAlternative,
-  setTotalCalories,
-  setCurrentPhoto,
+  CurrentFoodType,
   resetState,
+  setCurrentAlternative,
+  setCurrentCalories,
   setCurrentDate,
-  setCurrentUserId,
+  setCurrentFood,
+  setCurrentFoodType,
+  setCurrentPhoto,
+  setCurrentQuantity,
+  setCurrentFoodPageUserId,
+  setTotalCalories,
 } from "@/store/foodPage/foodPageSlice";
-import { CurrentFoodType } from "@/store/foodPage/foodPageSlice";
+import { useAppDispatch } from "@/store/hooks";
 
 const useFoodActions = () => {
   const dispatch = useAppDispatch();
@@ -47,8 +47,8 @@ const useFoodActions = () => {
   const updateCurrentDate = (date: string) => {
     dispatch(setCurrentDate(date));
   };
-  const updateCurrentUserId = (date: string) => {
-    dispatch(setCurrentUserId(date));
+  const updateCurrentUserId = (userId: string) => {
+    dispatch(setCurrentFoodPageUserId(userId));
   };
 
   const resetFoodPageState = () => {

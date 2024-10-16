@@ -5,8 +5,8 @@ import { ThemeProvider } from "@/components/theme-provider";
 import ReactQueryClientProvider from "@/components/query-client-provider";
 import ReduxProvider from "@/components/redux-provider";
 import ClerkProviderWithTheme from "@/components/clerk-provider";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import Navbar from "@/components/Navbar";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -25,7 +25,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="h-dvh">
+    <html lang="en" className="h-dvh" suppressHydrationWarning>
       <body className={inter.className}>
         <ThemeProvider
           attribute="class"
@@ -37,11 +37,9 @@ export default function RootLayout({
             <ReduxProvider>
               <ReactQueryClientProvider>
                 <ReactQueryDevtools initialIsOpen={false} />
-                <div className="bg-accent">
-                  <div className="container h-dvh bg-accent flex flex-col w-full  mx-auto">
-                    <Navbar />
-                    {children}
-                  </div>
+                <div className="h-dvh bg-accent flex flex-col w-full  mx-auto">
+                  <Navbar />
+                  {children}
                 </div>
               </ReactQueryClientProvider>
             </ReduxProvider>

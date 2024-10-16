@@ -7,6 +7,7 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { FoodSelect } from "@/db/schema";
 import { FoodItem } from "./FoodItem";
+import { cn } from "@/lib/utils";
 
 type FoodTypeDataProps = {
   foodData: FoodSelect[] | undefined;
@@ -15,8 +16,8 @@ type FoodTypeDataProps = {
 
 const FoodTypeData: React.FC<FoodTypeDataProps> = ({ foodData, type }) => {
   return (
-    <div>
-      <AccordionItem value={type}>
+    <div className={cn(foodData?.length === 0 && "bg-muted", "p-2 rounded-md")}>
+      <AccordionItem value={type} disabled={foodData?.length === 0}>
         <AccordionTrigger>{type}</AccordionTrigger>
         <AccordionContent>
           <div className="flex flex-col gap-2">

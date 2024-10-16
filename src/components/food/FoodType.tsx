@@ -1,8 +1,8 @@
 "use client";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { type CurrentFoodType } from "@/store/foodPage/foodPageSlice";
 import useFoodActions from "@/hooks/food/useFoodActions";
+import { CurrentFoodType } from "@/store/foodPage/foodPageSlice";
 import { useCallback } from "react";
 
 const FoodType: React.FC = () => {

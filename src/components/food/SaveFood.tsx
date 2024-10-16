@@ -1,21 +1,29 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { useUpdateTotalCaloriesForDay } from "@/hooks/db/dailySummaryDataHooks";
-import useFood from "@/hooks/food/useFood";
 import useFoodActions from "@/hooks/food/useFoodActions";
 import { useAddFoodEntry } from "@/hooks/db/foodDataHooks";
+import {
+  useCurrentAlternative,
+  useCurrentDate,
+  useCurrentFood,
+  useCurrentPhoto,
+  useCurrentQuantity,
+  useFoodType,
+  useTotalCalories,
+  useFoodPageUserId,
+} from "@/hooks/food/useFood";
 
 const SaveFood: React.FC<{ today?: boolean }> = ({ today }) => {
-  const {
-    currentFood,
-    currentQuantity,
-    foodType,
-    currentCalories,
-    currentPhoto,
-    currentAlternative,
-    currentDate,
-    userId,
-  } = useFood();
+  const currentFood = useCurrentFood();
+  const currentQuantity = useCurrentQuantity();
+  const foodType = useFoodType();
+  const totalCalories = useTotalCalories();
+  const currentPhoto = useCurrentPhoto();
+  const currentAlternative = useCurrentAlternative();
+  const currentDate = useCurrentDate();
+  const userId = useFoodPageUserId();
+
   const todaysDate = new Date().toLocaleDateString();
 
   const { resetFoodPageState } = useFoodActions();
@@ -24,11 +32,10 @@ const SaveFood: React.FC<{ today?: boolean }> = ({ today }) => {
   const updateDailySummary = useUpdateTotalCaloriesForDay();
 
   const handleAddFood = async () => {
-    resetFoodPageState();
     await mutation.mutateAsync({
       dateConsumed: today ? todaysDate : currentDate,
       alternativeFood: currentAlternative,
-      calories: currentCalories,
+      calories: totalCalories,
       foodName: currentFood,
       quantity: currentQuantity,
       foodType: foodType,
@@ -36,12 +43,19 @@ const SaveFood: React.FC<{ today?: boolean }> = ({ today }) => {
       userId,
     });
     await updateDailySummary.mutateAsync({ date: currentDate, userId });
+    resetFoodPageState();
   };
 
   return (
     <Button
       type="submit"
-      disabled={mutation.isPending || updateDailySummary.isPending}
+      disabled={
+        mutation.isPending ||
+        updateDailySummary.isPending ||
+        !currentFood ||
+        !currentQuantity ||
+        !currentAlternative
+      }
       onClick={handleAddFood}
     >
       Save changes

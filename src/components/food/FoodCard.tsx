@@ -1,6 +1,6 @@
 "use client";
 import { Input } from "@/components/ui/input";
-import { useCallback, useRef } from "react";
+import { useCallback, useRef, useState } from "react";
 import Image from "next/image";
 import {
   DialogDescription,
@@ -12,20 +12,20 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import useFoodActions from "@/hooks/food/useFoodActions";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useSearchInstant } from "@/hooks/api/useSearchInstant";
+import SearchFoodCard from "./SearchFoodCard";
+import SearchFoodCardSkeleton from "./SearchFoodCardSkeleton";
 
 const FoodCard: React.FC = () => {
+  const [searchTerm, setSearchTerm] = useState("");
   const { updateCurrentFood, updateCurrentPhoto } = useFoodActions();
 
   const inputRef = useRef<HTMLInputElement>(null);
-  const searchTerm = inputRef.current?.value;
 
-  const searchInstant = useSearchInstant(searchTerm ?? "");
+  const searchInstant = useSearchInstant(searchTerm);
 
-  const handleSearchClick = useCallback(() => {
-    if (inputRef.current) {
-      searchInstant.refetch();
-    }
-  }, [searchInstant]);
+  const handleSearchClick = () => {
+    setSearchTerm(inputRef.current?.value ?? "");
+  };
 
   const handleFoodClick = useCallback(
     (foodName: string, photoThumb: string) => {
@@ -43,7 +43,9 @@ const FoodCard: React.FC = () => {
       </DialogHeader>
       <div className="flex gap-1">
         <Input ref={inputRef} type="search" placeholder="Search foods..." />
-        <Button onClick={handleSearchClick}>Search</Button>
+        <Button onClick={handleSearchClick} disabled={searchInstant.isLoading}>
+          Search
+        </Button>
       </div>
       <Tabs defaultValue="common" className="w-full min-h-[50%]">
         <TabsList className="grid w-full grid-cols-2">
@@ -58,25 +60,17 @@ const FoodCard: React.FC = () => {
             <CardContent>
               <div className="flex flex-col gap-1  justify-center">
                 {searchInstant.data?.common &&
-                  searchInstant.data?.common.slice(0, 5).map((item) => (
-                    <div key={item.tag_id} className="flex gap-2">
-                      <Image
-                        src={item.photo.thumb}
-                        alt="foodImage"
-                        height={30}
-                        width={30}
-                      />
-                      <Button
-                        variant={"link"}
-                        className="text-card-foreground"
-                        onClick={() =>
-                          handleFoodClick(item.food_name, item.photo.thumb)
-                        }
-                      >
-                        {item.food_name}
-                      </Button>
-                    </div>
-                  ))}
+                  searchInstant.data?.common
+                    .slice(0, 5)
+                    .map((item) => (
+                      <SearchFoodCard key={item.tag_id} item={item} />
+                    ))}
+                {searchInstant.isLoading && <SearchFoodCardSkeleton />}
+                {searchInstant.data?.common?.length === 0 && (
+                  <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
+                    No results found
+                  </h4>
+                )}
               </div>
             </CardContent>
           </Card>
@@ -89,25 +83,17 @@ const FoodCard: React.FC = () => {
             <CardContent>
               <div className="flex flex-col gap-1  justify-center ">
                 {searchInstant.data?.branded &&
-                  searchInstant.data?.branded.slice(0, 5).map((item) => (
-                    <div key={item.nix_item_id} className="flex gap-2">
-                      <Image
-                        src={item.photo.thumb}
-                        alt="foodImage"
-                        height={30}
-                        width={30}
-                      />
-                      <Button
-                        variant={"link"}
-                        className="text-card-foreground"
-                        onClick={() =>
-                          handleFoodClick(item.food_name, item.photo.thumb)
-                        }
-                      >
-                        {item.food_name}
-                      </Button>
-                    </div>
-                  ))}
+                  searchInstant.data?.branded
+                    .slice(0, 5)
+                    .map((item) => (
+                      <SearchFoodCard key={item.nix_item_id} item={item} />
+                    ))}
+                {searchInstant.isLoading && <SearchFoodCardSkeleton />}
+                {searchInstant.data?.branded?.length === 0 && (
+                  <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
+                    No results found
+                  </h4>
+                )}
               </div>
             </CardContent>
           </Card>

@@ -1,12 +1,13 @@
 import { SearchNaturalNutrientsType } from "@/types/api/searchNaturalNutrients";
-import useFood from "@/hooks/food/useFood";
 import useFoodActions from "@/hooks/food/useFoodActions";
 import { UseQueryResult } from "@tanstack/react-query";
+import { useCurrentAlternative, useCurrentQuantity } from "./useFood";
 
 const useHandleSelectChange = (
   searchNaturalData: UseQueryResult<SearchNaturalNutrientsType, Error>
 ) => {
-  const { currentQuantity, currentAlternative } = useFood();
+  const currentQuantity = useCurrentQuantity();
+  const currentAlternative = useCurrentAlternative();
 
   const {
     updateCurrentCalories,
