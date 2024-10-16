@@ -6,6 +6,7 @@ import {
   timestamp,
   pgEnum,
   date,
+  decimal,
 } from "drizzle-orm/pg-core";
 
 const pgTable = pgTableCreator((name) => `plate_plan_${name}`);
@@ -66,6 +67,13 @@ export const userTable = pgTable("user_table", {
   createdAt: timestamp("created_at").default(new Date()),
 });
 
+export const weightTable = pgTable("weight_table", {
+  userId: text("user_id").primaryKey().notNull(),
+  weight: decimal("weight"),
+  date: timestamp("date").default(new Date()).notNull().unique(),
+  createdAt: timestamp("created_at").default(new Date()),
+});
+
 export type FoodInsert = typeof foodTable.$inferInsert;
 export type FoodSelect = typeof foodTable.$inferSelect;
 
@@ -77,3 +85,6 @@ export type DailySummarySelect = typeof dailySummaryTable.$inferSelect;
 
 export type UserInsert = typeof userTable.$inferInsert;
 export type UserSelect = typeof userTable.$inferSelect;
+
+export type WeightInsert = typeof weightTable.$inferInsert;
+export type WeightSelect = typeof weightTable.$inferSelect;
