@@ -5,10 +5,10 @@ import {
   getUserEntry,
   updateUserEntry,
 } from "@/utils/db/userTableUtils";
-import { useCurrentDate, useUserId } from "../food/useFood";
+import { useCurrentDate, useFoodPageUserId } from "../food/useFood";
 
 const useQueryKey = (today?: boolean) => {
-  const userId = useUserId();
+  const userId = useFoodPageUserId();
   const date = useDate(today);
 
   return ["user", "query", date, userId];
@@ -31,7 +31,7 @@ const useInvalidateDailyQueries = (today?: boolean) => {
 
 export const useGetUserEntry = (today?: boolean) => {
   const queryKey = useQueryKey(today);
-  const userId = useUserId();
+  const userId = useFoodPageUserId();
   return useQuery({
     queryFn: () => getUserEntry({ userId }),
     queryKey,

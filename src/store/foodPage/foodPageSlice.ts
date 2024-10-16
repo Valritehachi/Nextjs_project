@@ -54,7 +54,7 @@ const foodPageSlice = createSlice({
     setCurrentDate: (state, action: PayloadAction<string>) => {
       state.currentDate = action.payload;
     },
-    setCurrentUserId: (state, action: PayloadAction<string>) => {
+    setCurrentFoodPageUserId: (state, action: PayloadAction<string>) => {
       state.userId = action.payload;
     },
 
@@ -77,7 +77,7 @@ export const {
   setTotalCalories,
   setCurrentPhoto,
   setCurrentDate,
-  setCurrentUserId,
+  setCurrentFoodPageUserId,
   resetState,
 } = foodPageSlice.actions;
 

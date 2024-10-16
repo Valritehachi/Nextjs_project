@@ -6,13 +6,13 @@ import Image from "next/image";
 import { Button } from "../ui/button";
 import { useDeleteFoodEntry } from "@/hooks/db/foodDataHooks";
 import { useUpdateTotalCaloriesForDay } from "@/hooks/db/dailySummaryDataHooks";
-import { useCurrentDate, useUserId } from "@/hooks/food/useFood";
+import { useCurrentDate, useFoodPageUserId } from "@/hooks/food/useFood";
 
 export const FoodItem: React.FC<{
   item: FoodSelect;
 }> = ({ item }) => {
   const currentDate = useCurrentDate();
-  const userId = useUserId();
+  const userId = useFoodPageUserId();
   const mutation = useDeleteFoodEntry();
   const updateDailySummary = useUpdateTotalCaloriesForDay();
   const handleDeleteFood = async () => {

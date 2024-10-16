@@ -9,14 +9,18 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useUpdateTotalWaterForDay } from "@/hooks/db/dailySummaryDataHooks";
 import { useAddWaterEntry } from "@/hooks/db/waterDataHooks";
-import { useCurrentDate, useIsPast, useUserId } from "@/hooks/food/useFood";
+import {
+  useCurrentDate,
+  useIsPast,
+  useFoodPageUserId,
+} from "@/hooks/food/useFood";
 import { useRef } from "react";
 
 const WaterData: React.FC = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const isPast = useIsPast();
   const currentDate = useCurrentDate();
-  const userId = useUserId();
+  const userId = useFoodPageUserId();
 
   const addWaterMutation = useAddWaterEntry();
   const updateDailySummaryWaterMutation = useUpdateTotalWaterForDay();

@@ -30,6 +30,10 @@ export const getKgFromCalories = (calories: number) => {
   return convertLbToKg(convertCaloriesToLb(calories));
 };
 
+export const getKgFromCaloriesPerWeek = (calories: number) => {
+  return getKgFromCalories(calories) * 7;
+};
+
 export const getCaloriesPerDayFromKg = (kg: number) => {
   return getCaloriesFromKg(kg) / 7;
 };

@@ -5,10 +5,10 @@ import {
   updateWaterEntry,
 } from "@/utils/db/waterTableUtils";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useCurrentDate, useUserId } from "../food/useFood";
+import { useCurrentDate, useFoodPageUserId } from "../food/useFood";
 
 const useQueryKey = (today?: boolean) => {
-  const userId = useUserId();
+  const userId = useFoodPageUserId();
   const date = useDate(today);
 
   return ["water", "query", date, userId];
@@ -31,7 +31,7 @@ const useInvalidateDailyQueries = (today?: boolean) => {
 
 export const useGetWaterEntriesByDay = (today?: boolean) => {
   const queryKey = useQueryKey(today);
-  const userId = useUserId();
+  const userId = useFoodPageUserId();
   const date = useDate(today);
   return useQuery({
     queryFn: () => getWaterEntriesByDay({ date, userId }),

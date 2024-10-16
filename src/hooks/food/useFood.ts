@@ -33,7 +33,7 @@ export const useCurrentDate = () => {
   return useAppSelector((state) => state.foodPage.currentDate);
 };
 
-export const useUserId = () => {
+export const useFoodPageUserId = () => {
   return useAppSelector((state) => state.foodPage.userId);
 };
 
