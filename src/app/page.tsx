@@ -6,6 +6,10 @@ import Image from "next/image";
 import logo from "./../../public/landing-photo.jpeg";
 import { useState, useEffect, useRef } from "react";
 import aboutimage from "./../../public/about_us_image.jpg";
+import teambackground from "./../../public/team_background_image.jpg";
+import kteam from "./../../public/team_3.jpg";
+import jteam from "./../../public/team_2.jpg";
+import vteam from "./../../public/team_1.jpg";
 import { Button } from "@/components/ui/button";
 import { SignedIn, SignedOut } from "@clerk/nextjs";
 
@@ -112,6 +116,66 @@ export default function Home() {
           </p>
         </div>
       </div>
-    </div>
+
+
+      {/* Meet the Team Section */}
+      <div
+        className="h-screen flex flex-col justify-center items-center bg-gray-100"
+        style={{
+          backgroundImage: `url(${teambackground.src})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          width: "100vw",
+        }}
+      >
+      <div className="max-w-6xl text-center p-8 text-white">
+        <h2 className="text-5xl font-bold mb-8">Meet the Team</h2>
+
+        <div className="flex flex-col space-y-8">
+          <div className="flex items-center space-x-8 ">
+            <Image
+              src={kteam}
+              alt="Khekla Dlamini"
+              className="rounded-full mr-10"
+              width={150}
+              height={150}
+            />
+            <div className="text-left">
+              <h3 className="text-4xl font-bold">Khekla Dlamini</h3>
+              <p className="text-xl">Project Manager, UI/UX Designer</p>
+            </div>
+          </div>
+
+          <div className="flex items-center space-x-8">
+            <Image
+              src={vteam}
+              alt="Valrite Ehachi"
+              className="rounded-full"
+              width={150}
+              height={150}
+            />
+            <div className="text-left">
+              <h3 className="text-4xl font-bold">Valrite Ehachi</h3>
+              <p className="text-xl">Frontend Developer & Writer</p>
+            </div>
+          </div>
+
+          <div className="flex items-center space-x-8">
+            <Image
+              src={jteam}
+              alt="Joseph Karanja"
+              className="rounded-full"
+              width={150}
+              height={150}
+            />
+            <div className="text-left">
+              <h3 className="text-4xl font-bold">Joseph Karanja</h3>
+              <p className="text-xl">Backend Developer & QA Engineer</p>
+            </div>
+            </div> 
+          </div>
+        </div>
+      </div>
+    </div>  
   );
 }
