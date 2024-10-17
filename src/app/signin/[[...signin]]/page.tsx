@@ -13,7 +13,7 @@ export default function SignInPage() {
   }, []);
 
   return (
-    <div className="flex justify-center items-center h-full">
+    <div className="flex flex-col  h-screen">
       <Navbar />
       <div className="flex justify-center items-center h-full">
         <div

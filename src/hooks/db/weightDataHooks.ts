@@ -77,7 +77,8 @@ export const useDeleteWeightEntry = () => {
 };
 
 export const useCreateOrUpdateWeightEntry = () => {
-  const invalidateDailyQueries = useInvalidateDailyQueries();
+  const date = new Date().toLocaleDateString();
+  const invalidateDailyQueries = useInvalidateDailyQueries(date);
 
   return useMutation({
     mutationFn: createOrUpdateWeightEntry,
