@@ -137,13 +137,13 @@ export default function Home() {
           <div className="flex items-center space-x-8 ">
             <Image
               src={kteam}
-              alt="Khekla Dlamini"
+              alt="Khehla Dlamini"
               className="rounded-full mr-10"
               width={150}
               height={150}
             />
             <div className="text-left">
-              <h3 className="text-4xl font-bold">Khekla Dlamini</h3>
+              <h3 className="text-4xl font-bold">Khehla Dlamini</h3>
               <p className="text-xl">Project Manager, UI/UX Designer</p>
             </div>
           </div>
