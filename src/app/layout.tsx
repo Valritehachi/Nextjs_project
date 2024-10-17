@@ -37,7 +37,6 @@ export default function RootLayout({
           <ClerkProviderWithTheme>
             <ReduxProvider>
               <ReactQueryClientProvider>
-                <ReactQueryDevtools initialIsOpen={false} />
                 <div className="bg-accent ">
                   <div className="min-h-screen flex flex-col w-full  mx-auto">
                     {children}
