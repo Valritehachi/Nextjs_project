@@ -1,7 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   addWeightEntry,
-  getWeightEntriesForWeek,
   updateWeightEntry,
   deleteWeightEntry,
   createOrUpdateWeightEntry,
@@ -33,17 +32,6 @@ export const useAddWeightEntry = () => {
   return useMutation({
     mutationFn: addWeightEntry,
     onSuccess: invalidateDailyQueries,
-  });
-};
-
-export const useGetWeightEntriesForWeek = () => {
-  const startDate = new Date();
-  const endDate = subDays(startDate, 7);
-  const queryKey = useQueryKey();
-  const userId = useFoodPageUserId();
-  return useQuery({
-    queryFn: () => getWeightEntriesForWeek(userId, startDate, endDate),
-    queryKey,
   });
 };
 

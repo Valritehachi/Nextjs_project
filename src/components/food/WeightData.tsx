@@ -38,7 +38,7 @@ const WeightData: React.FC = () => {
     await addWeightMutation.mutateAsync({
       userId,
       weight: String(inputRef.current?.value),
-      date: new Date(currentDate),
+      date: currentDate,
     });
     resetInput();
     toast({
