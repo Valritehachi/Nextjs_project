@@ -7,6 +7,7 @@ import ReduxProvider from "@/components/redux-provider";
 import ClerkProviderWithTheme from "@/components/clerk-provider";
 import Navbar from "@/components/Navbar";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -41,6 +42,7 @@ export default function RootLayout({
                   <div className="min-h-screen  flex flex-col w-full  mx-auto">
                     <Navbar />
                     {children}
+                    <Toaster />
                   </div>
                 </div>
               </ReactQueryClientProvider>
