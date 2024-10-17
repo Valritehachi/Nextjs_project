@@ -16,6 +16,8 @@ import {
   useIsPast,
   useFoodPageUserId,
 } from "@/hooks/food/useFood";
+import { useToast } from "@/hooks/use-toast";
+import { format } from "date-fns";
 import { useRef } from "react";
 
 const WeightData: React.FC = () => {
@@ -23,7 +25,13 @@ const WeightData: React.FC = () => {
   const isPast = useIsPast();
   const currentDate = useCurrentDate();
   const userId = useFoodPageUserId();
+  const { toast } = useToast();
 
+  const resetInput = () => {
+    if (inputRef.current) {
+      inputRef.current.value = "";
+    }
+  };
   const addWeightMutation = useCreateOrUpdateWeightEntry();
 
   const handleAddWeight = async () => {
@@ -31,6 +39,14 @@ const WeightData: React.FC = () => {
       userId,
       weight: String(inputRef.current?.value),
       date: new Date(currentDate),
+    });
+    resetInput();
+    toast({
+      title: "Weight added",
+      description: `Weight added successfully for ${format(
+        currentDate,
+        "PPPP"
+      )}`,
     });
   };
 

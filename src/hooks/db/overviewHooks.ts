@@ -1,7 +1,7 @@
-import { subDays } from "date-fns";
+import { format, subDays } from "date-fns";
 import { useGetDailyEntriesOverviewPage } from "./dailySummaryDataHooks";
 
-export const useGetChartData = (calories: boolean) => {
+export const useGetChartData = () => {
   const today = new Date().toLocaleDateString();
   const day1 = useGetDailyEntriesOverviewPage(today);
   const day2 = useGetDailyEntriesOverviewPage(
@@ -23,31 +23,43 @@ export const useGetChartData = (calories: boolean) => {
     subDays(today, 6).toLocaleDateString()
   );
 
-  if (calories) {
-    return [
-      {
-        day: "6 days ago",
-        calories: day7.data?.[0]?.totalCalories,
-      },
-      { day: "5 days ago", calories: day6.data?.[0]?.totalCalories },
-      { day: "4 days ago", calories: day5.data?.[0]?.totalCalories },
-      { day: "3 days ago", calories: day4.data?.[0]?.totalCalories },
-      { day: "2 days ago", calories: day3.data?.[0]?.totalCalories },
-      { day: "Yesterday", calories: day2.data?.[0]?.totalCalories },
-      { day: "Today", calories: day1.data?.[0]?.totalCalories },
-    ];
-  }
-  // return { day1, day2, day3, day4, day5, day6, day7 };
   return [
     {
-      day: "6 days ago",
-      water: day7.data?.[0]?.totalWater,
+      day: `${format(subDays(today, 6), "ccc")}`,
+      calories: day7.data?.[0]?.totalCalories ?? 0,
+      water: day7.data?.[0]?.totalWater ?? 0,
     },
-    { day: "5 days ago", water: day6.data?.[0]?.totalWater },
-    { day: "4 days ago", water: day5.data?.[0]?.totalWater },
-    { day: "3 days ago", water: day4.data?.[0]?.totalWater },
-    { day: "2 days ago", water: day3.data?.[0]?.totalWater },
-    { day: "Yesterday", water: day2.data?.[0]?.totalWater },
-    { day: "Today", water: day1.data?.[0]?.totalWater },
+    {
+      day: `${format(subDays(today, 5), "ccc")}`,
+      calories: day6.data?.[0]?.totalCalories ?? 0,
+      water: day6.data?.[0]?.totalWater ?? 0,
+    },
+
+    {
+      day: `${format(subDays(today, 4), "ccc")}`,
+      calories: day5.data?.[0]?.totalCalories ?? 0,
+      water: day5.data?.[0]?.totalWater ?? 0,
+    },
+    {
+      day: `${format(subDays(today, 3), "ccc")}`,
+      calories: day4.data?.[0]?.totalCalories ?? 0,
+      water: day4.data?.[0]?.totalWater ?? 0,
+    },
+    {
+      day: `${format(subDays(today, 2), "ccc")}`,
+      calories: day3.data?.[0]?.totalCalories ?? 0,
+      water: day3.data?.[0]?.totalWater ?? 0,
+    },
+    {
+      day: `${format(subDays(today, 1), "ccc")}`,
+
+      calories: day2.data?.[0]?.totalCalories ?? 0,
+      water: day2.data?.[0]?.totalWater ?? 0,
+    },
+    {
+      day: `${format(today, "ccc")}`,
+      calories: day1.data?.[0]?.totalCalories ?? 0,
+      water: day1.data?.[0]?.totalWater ?? 0,
+    },
   ];
 };

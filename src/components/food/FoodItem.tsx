@@ -7,6 +7,7 @@ import { Button } from "../ui/button";
 import { useDeleteFoodEntry } from "@/hooks/db/foodDataHooks";
 import { useUpdateTotalCaloriesForDay } from "@/hooks/db/dailySummaryDataHooks";
 import { useCurrentDate, useFoodPageUserId } from "@/hooks/food/useFood";
+import { useToast } from "@/hooks/use-toast";
 
 export const FoodItem: React.FC<{
   item: FoodSelect;
@@ -14,10 +15,17 @@ export const FoodItem: React.FC<{
   const currentDate = useCurrentDate();
   const userId = useFoodPageUserId();
   const mutation = useDeleteFoodEntry();
+  const { toast } = useToast();
   const updateDailySummary = useUpdateTotalCaloriesForDay();
+
   const handleDeleteFood = async () => {
     await mutation.mutateAsync({ id: item.id, userId });
     await updateDailySummary.mutateAsync({ date: currentDate, userId });
+    toast({
+      title: "Food deleted",
+      variant: "destructive",
+      description: `Food item successfully deleted.`,
+    });
   };
   return (
     <div>

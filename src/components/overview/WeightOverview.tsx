@@ -1,7 +1,7 @@
 "use client";
 
 import { useGetDailyEntriesOverviewPage } from "@/hooks/db/dailySummaryDataHooks";
-import { subDays } from "date-fns";
+import { format, subDays } from "date-fns";
 
 import {
   Card,
@@ -24,6 +24,9 @@ import {
   BarChart,
   CartesianGrid,
   LabelList,
+  Line,
+  LineChart,
+  ResponsiveContainer,
   XAxis,
   YAxis,
 } from "recharts";
@@ -43,51 +46,88 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 const WeightOverview = () => {
+  const today = new Date().toLocaleDateString();
   const weightData = useGetWeightEntry();
-  console.log(weightData.data);
-  const day1 = weightData.data ? weightData.data[0]?.weight : 0;
-  const day2 = weightData.data ? weightData.data[1]?.weight : 0;
-  const day3 = weightData.data ? weightData.data[2]?.weight : 0;
-  const day4 = weightData.data ? weightData.data[3]?.weight : 0;
-  const day5 = weightData.data ? weightData.data[4]?.weight : 0;
-  const day6 = weightData.data ? weightData.data[5]?.weight : 0;
-  const day7 = weightData.data ? weightData.data[6]?.weight : 0;
+  // const day1 = weightData.data ? weightData.data[0]?.weight : 0;
+  // const day2 = weightData.data ? weightData.data[1]?.weight : 0;
+  // const day3 = weightData.data ? weightData.data[2]?.weight : 0;
+  // const day4 = weightData.data ? weightData.data[3]?.weight : 0;
+  // const day5 = weightData.data ? weightData.data[4]?.weight : 0;
+  // const day6 = weightData.data ? weightData.data[5]?.weight : 0;
+  // const day7 = weightData.data ? weightData.data[6]?.weight : 0;
+  const day1 = weightData.data ? Number(weightData.data[0]?.weight) : 0;
+  const day2 = weightData.data ? Number(weightData.data[1]?.weight) : 0;
+  const day3 = weightData.data ? Number(weightData.data[2]?.weight) : 0;
+  const day4 = weightData.data ? Number(weightData.data[3]?.weight) : 0;
+  const day5 = weightData.data ? Number(weightData.data[4]?.weight) : 0;
+  const day6 = weightData.data ? Number(weightData.data[5]?.weight) : 0;
+  const day7 = weightData.data ? Number(weightData.data[6]?.weight) : 0;
+
+  const minWeight = Math.min(day1, day2, day3, day4, day5, day6, day7);
+  const maxWeight = Math.max(day1, day2, day3, day4, day5, day6, day7);
+
+  const yAxisDomain = [minWeight - 0.5, maxWeight + 0.5];
 
   const chartData = [
     {
-      day: "6 days ago",
+      day: `${format(subDays(today, 6), "ccc")}`,
       weight: day7,
     },
-    { day: "5 days ago", weight: day6 },
-    { day: "4 days ago", weight: day5 },
-    { day: "3 days ago", weight: day4 },
-    { day: "2 days ago", weight: day3 },
-    { day: "Yesterday", weight: day2 },
-    { day: "Today", weight: day1 },
+    { day: `${format(subDays(today, 5), "ccc")}`, weight: day6 },
+    { day: `${format(subDays(today, 4), "ccc")}`, weight: day5 },
+    { day: `${format(subDays(today, 3), "ccc")}`, weight: day4 },
+    { day: `${format(subDays(today, 2), "ccc")}`, weight: day3 },
+    { day: `${format(subDays(today, 1), "ccc")}`, weight: day2 },
+    { day: `${format(today, "ccc")}`, weight: day1 },
   ];
 
   return (
-    <Card>
+    <Card className="w-full h-full">
       <CardHeader>
-        <CardTitle>A bar chart of calorie intake over the past week</CardTitle>
+        <CardTitle>Weekly Weight Trend</CardTitle>
+        <CardDescription>Weight (kg) over the past week</CardDescription>
       </CardHeader>
       <CardContent>
-        <ChartContainer config={chartConfig} className="min-h-[200]">
-          <BarChart accessibilityLayer data={chartData}>
-            <CartesianGrid vertical={false} />
-            <XAxis
-              dataKey="day"
-              tickLine={false}
-              tickMargin={10}
-              axisLine={false}
-              tickFormatter={(value) => value.slice(0, 3)}
-            />
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent hideLabel />}
-            />
-            <Bar dataKey="weight" fill="var(--color-weight)" radius={8} />
-          </BarChart>
+        <ChartContainer config={chartConfig} className="h-[30vh] w-full">
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart
+              data={chartData}
+              margin={{ top: 10, right: 30, left: 20, bottom: 0 }}
+            >
+              <XAxis dataKey="day" axisLine={false} tickLine={false} />
+              <YAxis
+                domain={yAxisDomain}
+                axisLine={false}
+                tickLine={false}
+                tickCount={5}
+                tickFormatter={(value) => `${value.toFixed(1)}`}
+                label={{
+                  value: "kg",
+                  angle: 0,
+                  position: "insideLeft",
+                  offset: 0,
+                }}
+              />
+              <ChartTooltip content={<ChartTooltipContent hideLabel />} />
+              <Line
+                type="monotone"
+                dataKey="weight"
+                stroke="var(--color-weight)"
+                strokeWidth={2}
+                dot={{
+                  r: 4,
+                  fill: "var(--color-weight)",
+                  stroke: "var(--color-weight)",
+                }}
+                activeDot={{
+                  r: 6,
+                  fill: "var(--color-weight)",
+                  stroke: "var(--background)",
+                  strokeWidth: 2,
+                }}
+              />
+            </LineChart>
+          </ResponsiveContainer>
         </ChartContainer>
       </CardContent>
       <CardFooter className="flex-col items-start gap-2 text-sm">

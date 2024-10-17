@@ -33,13 +33,14 @@ export default function Home() {
       { threshold: 0.1 }
     );
 
-    if (aboutRef.current) {
-      observer.observe(aboutRef.current);
+    const currentAboutRef = aboutRef.current;
+    if (currentAboutRef) {
+      observer.observe(currentAboutRef);
     }
 
     return () => {
-      if (aboutRef.current) {
-        observer.unobserve(aboutRef.current);
+      if (currentAboutRef) {
+        observer.unobserve(currentAboutRef);
       }
     };
   }, []);
@@ -47,6 +48,7 @@ export default function Home() {
   return (
     <div>
       {/* Home */}
+      <Navbar />
       <div className="h-screen grid lg:grid-cols-2 grid-cols-1 gap-2">
         <div className=" flex flex-col  gap-4 items-center justify-center h-full">
           <h1 className="scroll-m-0 text-7xl font-extrabold tracking-tight lg:text-8xl ">
