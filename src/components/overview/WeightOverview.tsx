@@ -31,10 +31,7 @@ import {
   YAxis,
 } from "recharts";
 import { useGetChartData } from "@/hooks/db/overviewHooks";
-import {
-  useGetWeightEntriesForWeek,
-  useGetWeightEntry,
-} from "@/hooks/db/weightDataHooks";
+import { useGetWeightEntry } from "@/hooks/db/weightDataHooks";
 
 export const description = "A bar chart for calorie intake over the past week.";
 
