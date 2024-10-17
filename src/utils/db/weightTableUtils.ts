@@ -27,23 +27,6 @@ export const getWeightEntry = async ({ userId }: GetWeightEntryParams) => {
     .where(and(eq(weightTable.userId, userId)));
 };
 
-export const getWeightEntriesForWeek = async (
-  userId: string,
-  startDate: Date,
-  endDate: Date
-) => {
-  return await db
-    .select()
-    .from(weightTable)
-    .where(
-      and(
-        eq(weightTable.userId, userId),
-        gte(weightTable.date, startDate),
-        lte(weightTable.date, endDate)
-      )
-    );
-};
-
 export const updateWeightEntry = async ({
   userId,
   update,
