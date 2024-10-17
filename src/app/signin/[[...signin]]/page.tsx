@@ -14,12 +14,15 @@ export default function SignInPage() {
 
   return (
     <div className="flex justify-center items-center h-full">
-      <div
-        className={`transition-opacity duration-1000 ease-out ${
-          isLoaded ? "opacity-100" : "opacity-0"
-        }`}
-      >
-      <SignIn routing="path" path="/signin" signUpUrl="/signup" />
+      <Navbar />
+      <div className="flex justify-center items-center h-full">
+        <div
+          className={`transition-opacity duration-1000 ease-out ${
+            isLoaded ? "opacity-100" : "opacity-0"
+          }`}
+        >
+          <SignIn routing="path" path="/signin" signUpUrl="/signup" />
+        </div>
       </div>
     </div>
   );

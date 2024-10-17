@@ -13,12 +13,15 @@ export default function SignupPage() {
   }, []);
   return (
     <div className="flex justify-center items-center h-full">
-      <div
-        className={`transition-opacity duration-1000 ease-out ${
-          isLoaded ? "opacity-100" : "opacity-0"
-        }`}
-      >
-      <SignUp routing="path" path="/signup" signInUrl="/signin" />
+      <Navbar />
+      <div className="flex justify-center items-center h-full">
+        <div
+          className={`transition-opacity duration-1000 ease-out ${
+            isLoaded ? "opacity-100" : "opacity-0"
+          }`}
+        >
+          <SignUp routing="path" path="/signup" signInUrl="/signin" />
+        </div>
       </div>
     </div>
   );

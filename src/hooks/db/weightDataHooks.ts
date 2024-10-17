@@ -5,19 +5,20 @@ import {
   deleteWeightEntry,
   createOrUpdateWeightEntry,
   getWeightEntry,
+  getDayWeightEntry,
 } from "@/utils/db/weightTableUtils";
 import { WeightInsert, WeightSelect } from "@/db/schema";
 import { useBodyPageUserId } from "../bodyPage/useBodyPageDetails";
 import { useFoodPageUserId } from "../food/useFood";
 import { subDays } from "date-fns";
 
-const useQueryKey = () => {
+const useQueryKey = (date: string) => {
   const userId = useBodyPageUserId();
-  return ["weight", "query", userId];
+  return ["weight", "query", userId, date];
 };
 
-const useInvalidateDailyQueries = () => {
-  const queryKey = useQueryKey();
+const useInvalidateDailyQueries = (date: string) => {
+  const queryKey = useQueryKey(date);
   const queryClient = useQueryClient();
   return () => {
     queryClient.invalidateQueries({
@@ -27,7 +28,8 @@ const useInvalidateDailyQueries = () => {
 };
 
 export const useAddWeightEntry = () => {
-  const invalidateDailyQueries = useInvalidateDailyQueries();
+  const date = new Date().toLocaleDateString();
+  const invalidateDailyQueries = useInvalidateDailyQueries(date);
 
   return useMutation({
     mutationFn: addWeightEntry,
@@ -36,7 +38,8 @@ export const useAddWeightEntry = () => {
 };
 
 export const useGetWeightEntry = () => {
-  const queryKey = useQueryKey();
+  const date = new Date().toLocaleDateString();
+  const queryKey = useQueryKey(date);
   const userId = useFoodPageUserId();
   return useQuery({
     queryFn: () => getWeightEntry({ userId }),
@@ -44,8 +47,18 @@ export const useGetWeightEntry = () => {
   });
 };
 
+export const useGetDayWeightEntry = (date: string) => {
+  const queryKey = useQueryKey(date);
+  const userId = useFoodPageUserId();
+  return useQuery({
+    queryFn: () => getDayWeightEntry({ userId, date }),
+    queryKey,
+  });
+};
+
 export const useUpdateWeightEntry = () => {
-  const invalidateDailyQueries = useInvalidateDailyQueries();
+  const date = new Date().toLocaleDateString();
+  const invalidateDailyQueries = useInvalidateDailyQueries(date);
 
   return useMutation({
     mutationFn: updateWeightEntry,
@@ -54,7 +67,8 @@ export const useUpdateWeightEntry = () => {
 };
 
 export const useDeleteWeightEntry = () => {
-  const invalidateDailyQueries = useInvalidateDailyQueries();
+  const date = new Date().toLocaleDateString();
+  const invalidateDailyQueries = useInvalidateDailyQueries(date);
 
   return useMutation({
     mutationFn: deleteWeightEntry,

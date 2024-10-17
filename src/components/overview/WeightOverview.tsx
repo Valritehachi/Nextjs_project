@@ -31,7 +31,11 @@ import {
   YAxis,
 } from "recharts";
 import { useGetChartData } from "@/hooks/db/overviewHooks";
-import { useGetWeightEntry } from "@/hooks/db/weightDataHooks";
+import {
+  useGetDayWeightEntry,
+  useGetWeightEntry,
+} from "@/hooks/db/weightDataHooks";
+import { WeightSelect } from "@/db/schema";
 
 export const description = "A bar chart for calorie intake over the past week.";
 
@@ -42,28 +46,32 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
+const UseGetDailyEntry = (day: number): number => {
+  const today = new Date().toLocaleDateString();
+  const currentDay = subDays(today, day).toLocaleDateString();
+  const dateWeightData = useGetDayWeightEntry(currentDay);
+  const weight: number =
+    dateWeightData.data && dateWeightData.data?.length > 0
+      ? Number(dateWeightData.data[0]?.weight)
+      : 0;
+  return weight;
+};
+
 const WeightOverview = () => {
   const today = new Date().toLocaleDateString();
-  const weightData = useGetWeightEntry();
-  // const day1 = weightData.data ? weightData.data[0]?.weight : 0;
-  // const day2 = weightData.data ? weightData.data[1]?.weight : 0;
-  // const day3 = weightData.data ? weightData.data[2]?.weight : 0;
-  // const day4 = weightData.data ? weightData.data[3]?.weight : 0;
-  // const day5 = weightData.data ? weightData.data[4]?.weight : 0;
-  // const day6 = weightData.data ? weightData.data[5]?.weight : 0;
-  // const day7 = weightData.data ? weightData.data[6]?.weight : 0;
-  const day1 = weightData.data ? Number(weightData.data[0]?.weight) : 0;
-  const day2 = weightData.data ? Number(weightData.data[1]?.weight) : 0;
-  const day3 = weightData.data ? Number(weightData.data[2]?.weight) : 0;
-  const day4 = weightData.data ? Number(weightData.data[3]?.weight) : 0;
-  const day5 = weightData.data ? Number(weightData.data[4]?.weight) : 0;
-  const day6 = weightData.data ? Number(weightData.data[5]?.weight) : 0;
-  const day7 = weightData.data ? Number(weightData.data[6]?.weight) : 0;
+
+  let day1 = UseGetDailyEntry(0);
+  let day2 = UseGetDailyEntry(1);
+  let day3 = UseGetDailyEntry(2);
+  let day4 = UseGetDailyEntry(3);
+  let day5 = UseGetDailyEntry(4);
+  let day6 = UseGetDailyEntry(5);
+  let day7 = UseGetDailyEntry(6);
 
   const minWeight = Math.min(day1, day2, day3, day4, day5, day6, day7);
   const maxWeight = Math.max(day1, day2, day3, day4, day5, day6, day7);
 
-  const yAxisDomain = [minWeight - 0.5, maxWeight + 0.5];
+  const yAxisDomain = [minWeight - 10, maxWeight + 10];
 
   const chartData = [
     {

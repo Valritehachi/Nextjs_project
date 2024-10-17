@@ -7,6 +7,11 @@ interface GetWeightEntryParams {
   userId: WeightSelect["userId"];
 }
 
+interface GetDayWeightEntryParams {
+  userId: WeightSelect["userId"];
+  date: WeightSelect["date"];
+}
+
 interface UpdateWeightEntryParams {
   userId: WeightSelect["userId"];
   update: Partial<WeightInsert>;
@@ -27,6 +32,13 @@ export const getWeightEntry = async ({ userId }: GetWeightEntryParams) => {
     .where(and(eq(weightTable.userId, userId)));
 };
 
+export const getDayWeightEntry = async ({ userId, date }: GetDayWeightEntryParams) => {
+  return await db
+    .select()
+    .from(weightTable)
+    .where(and(eq(weightTable.userId, userId), eq(weightTable.date, date)));
+};
+
 export const updateWeightEntry = async ({
   userId,
   update,
@@ -45,12 +57,15 @@ export const createOrUpdateWeightEntry = async ({
   userId,
   ...update
 }: WeightInsert) => {
-  const existingEntry = await getWeightEntry({ userId });
-  const isExistingEntry = existingEntry.find(
-    (entry) => entry.date === update.date
-  );
+  if (!update.date) return;
+  const existingEntry = await db
+    .select()
+    .from(weightTable)
+    .where(
+      and(eq(weightTable.userId, userId), eq(weightTable.date, update.date))
+    );
 
-  if (isExistingEntry) {
+  if (existingEntry.length > 0) {
     // Update the existing entry
     await updateWeightEntry({ userId, update });
   } else {
