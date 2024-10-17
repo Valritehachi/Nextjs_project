@@ -71,7 +71,7 @@ export const weightTable = pgTable("weight_table", {
   id: serial("id").primaryKey(),
   userId: text("user_id").notNull(),
   weight: decimal("weight"),
-  date: timestamp("date").default(new Date()).notNull().unique(),
+  date: timestamp("date").default(new Date()).notNull(),
   createdAt: timestamp("created_at").default(new Date()),
 });
 

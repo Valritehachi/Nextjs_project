@@ -39,8 +39,7 @@ export default function RootLayout({
               <ReactQueryClientProvider>
                 <ReactQueryDevtools initialIsOpen={false} />
                 <div className="bg-accent ">
-                  <div className="min-h-screen  flex flex-col w-full  mx-auto">
-                    <Navbar />
+                  <div className="min-h-screen flex flex-col w-full  mx-auto">
                     {children}
                     <Toaster />
                   </div>

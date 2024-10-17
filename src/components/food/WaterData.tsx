@@ -14,6 +14,8 @@ import {
   useIsPast,
   useFoodPageUserId,
 } from "@/hooks/food/useFood";
+import { useToast } from "@/hooks/use-toast";
+import { format } from "date-fns";
 import { useRef } from "react";
 
 const WaterData: React.FC = () => {
@@ -21,9 +23,15 @@ const WaterData: React.FC = () => {
   const isPast = useIsPast();
   const currentDate = useCurrentDate();
   const userId = useFoodPageUserId();
+  const { toast } = useToast();
 
   const addWaterMutation = useAddWaterEntry();
   const updateDailySummaryWaterMutation = useUpdateTotalWaterForDay();
+  const resetInput = () => {
+    if (inputRef.current) {
+      inputRef.current.value = "";
+    }
+  };
 
   const handleAddWater = async () => {
     await addWaterMutation.mutateAsync({
@@ -34,6 +42,14 @@ const WaterData: React.FC = () => {
     await updateDailySummaryWaterMutation.mutateAsync({
       date: currentDate,
       userId,
+    });
+    resetInput();
+    toast({
+      title: "Water intake added",
+      description: `Water intake added successfully for ${format(
+        currentDate,
+        "PPPP"
+      )}`,
     });
   };
 

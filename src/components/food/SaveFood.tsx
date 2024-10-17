@@ -13,6 +13,8 @@ import {
   useTotalCalories,
   useFoodPageUserId,
 } from "@/hooks/food/useFood";
+import { useToast } from "@/hooks/use-toast";
+import { format } from "date-fns";
 
 const SaveFood: React.FC<{ today?: boolean }> = ({ today }) => {
   const currentFood = useCurrentFood();
@@ -26,6 +28,7 @@ const SaveFood: React.FC<{ today?: boolean }> = ({ today }) => {
 
   const todaysDate = new Date().toLocaleDateString();
 
+  const { toast } = useToast();
   const { resetFoodPageState } = useFoodActions();
 
   const mutation = useAddFoodEntry();
@@ -43,6 +46,13 @@ const SaveFood: React.FC<{ today?: boolean }> = ({ today }) => {
       userId,
     });
     await updateDailySummary.mutateAsync({ date: currentDate, userId });
+    toast({
+      title: "Food added",
+      description: `${currentQuantity} ${currentAlternative} of ${currentFood} for ${foodType} added successfully for ${format(
+        today ? todaysDate : currentDate,
+        "PPPP"
+      )}`,
+    });
     resetFoodPageState();
   };
 

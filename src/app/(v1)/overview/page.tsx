@@ -1,17 +1,16 @@
 import SetUserId from "@/components/food/setUserId";
-import CaloriesOverview from "@/components/overview/CaloriesOverview";
-import WaterOverview from "@/components/overview/WaterOverview";
+import CaloriesWaterOverview from "@/components/overview/CaloriesWaterOverview";
 import WeightOverview from "@/components/overview/WeightOverview";
 import { getUserId } from "@/utils/auth/getUserId";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const OverviewPage = async () => {
   const userId = await getUserId();
   return (
     <div>
       <SetUserId userId={userId} />
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 justify-center content-center container mx-auto h-full">
-        <CaloriesOverview />
-        <WaterOverview />
+      <div className="flex flex-col gap-2 container mx-auto h-full">
+        <CaloriesWaterOverview />
         <WeightOverview />
       </div>
     </div>

@@ -25,6 +25,7 @@ import {
   useAddUserEntry,
   useCreateOrUpdateUserEntry,
 } from "@/hooks/db/userDataHooks";
+import { useToast } from "@/hooks/use-toast";
 
 const SetDetailsf: React.FC = () => {
   const calorieLimit = useCalorieLimit();
@@ -32,6 +33,7 @@ const SetDetailsf: React.FC = () => {
   const waterLimit = useWaterIntakeLimit();
   const weightDifferencePerWeek = useWeightDifferencePerWeek();
   const userId = useBodyPageUserId();
+  const { toast } = useToast();
 
   const {
     updateCaloriesLimit,
@@ -55,6 +57,24 @@ const SetDetailsf: React.FC = () => {
   const addUserData = useCreateOrUpdateUserEntry();
 
   const handleSaveLimits = () => {
+    if (calorieLimit < 1500) {
+      toast({
+        title: "Calorie Intake Input Error",
+        variant: "destructive",
+        description:
+          "It is advised for your health to have a calorie limit above 1500 kcal",
+      });
+      return;
+    }
+    if (waterLimit < 1500) {
+      toast({
+        title: "Water Intake Input Error",
+        variant: "destructive",
+        description:
+          "It is advised for your health to have a water limit above 1500 ml",
+      });
+      return;
+    }
     addUserData.mutate({
       userId,
       preferredCalories: calorieLimit,
@@ -88,7 +108,7 @@ const SetDetailsf: React.FC = () => {
         </div>
         <div className="space-y-1">
           <Label htmlFor="waterLimit">
-            Water Intake (ml) <span className="font-bold">above 1000</span>
+            Water Intake (ml) <span className="font-bold">above 1500</span>
           </Label>
           <Input
             id="waterLimit"
@@ -103,12 +123,7 @@ const SetDetailsf: React.FC = () => {
       <CardFooter>
         <div className="flex flex-col gap-1">
           <Label>{weightPerWeek}</Label>
-          <Button
-            disabled={
-              calorieLimit < 1500 || waterLimit < 1000 || addUserData.isPending
-            }
-            onClick={handleSaveLimits}
-          >
+          <Button disabled={addUserData.isPending} onClick={handleSaveLimits}>
             Save changes
           </Button>
         </div>
