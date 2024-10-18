@@ -30,12 +30,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { useGetChartData } from "@/hooks/db/overviewHooks";
-import {
-  useGetDayWeightEntry,
-  useGetWeightEntry,
-} from "@/hooks/db/weightDataHooks";
-import { WeightSelect } from "@/db/schema";
+import { useGetDayWeightEntry } from "@/hooks/db/weightDataHooks";
 
 export const description = "A bar chart for calorie intake over the past week.";
 

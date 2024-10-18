@@ -32,7 +32,7 @@ const WeightData: React.FC = () => {
       inputRef.current.value = "";
     }
   };
-  const addWeightMutation = useCreateOrUpdateWeightEntry();
+  const addWeightMutation = useCreateOrUpdateWeightEntry(currentDate);
 
   const handleAddWeight = async () => {
     await addWeightMutation.mutateAsync({
@@ -45,7 +45,7 @@ const WeightData: React.FC = () => {
       title: "Weight added",
       description: `Weight added successfully for ${format(
         currentDate,
-        "PPPP"
+        "PPPP",
       )}`,
     });
   };

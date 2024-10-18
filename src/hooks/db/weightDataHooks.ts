@@ -27,8 +27,7 @@ const useInvalidateDailyQueries = (date: string) => {
   };
 };
 
-export const useAddWeightEntry = () => {
-  const date = new Date().toLocaleDateString();
+export const useAddWeightEntry = (date: string) => {
   const invalidateDailyQueries = useInvalidateDailyQueries(date);
 
   return useMutation({
@@ -37,8 +36,7 @@ export const useAddWeightEntry = () => {
   });
 };
 
-export const useGetWeightEntry = () => {
-  const date = new Date().toLocaleDateString();
+export const useGetWeightEntry = (date: string) => {
   const queryKey = useQueryKey(date);
   const userId = useFoodPageUserId();
   return useQuery({
@@ -56,8 +54,7 @@ export const useGetDayWeightEntry = (date: string) => {
   });
 };
 
-export const useUpdateWeightEntry = () => {
-  const date = new Date().toLocaleDateString();
+export const useUpdateWeightEntry = (date: string) => {
   const invalidateDailyQueries = useInvalidateDailyQueries(date);
 
   return useMutation({
@@ -66,8 +63,7 @@ export const useUpdateWeightEntry = () => {
   });
 };
 
-export const useDeleteWeightEntry = () => {
-  const date = new Date().toLocaleDateString();
+export const useDeleteWeightEntry = (date: string) => {
   const invalidateDailyQueries = useInvalidateDailyQueries(date);
 
   return useMutation({
@@ -76,8 +72,7 @@ export const useDeleteWeightEntry = () => {
   });
 };
 
-export const useCreateOrUpdateWeightEntry = () => {
-  const date = new Date().toLocaleDateString();
+export const useCreateOrUpdateWeightEntry = (date: string) => {
   const invalidateDailyQueries = useInvalidateDailyQueries(date);
 
   return useMutation({
