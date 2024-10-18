@@ -132,7 +132,7 @@ const WeightOverview = () => {
       </CardContent>
       <CardFooter className="flex-col items-start gap-2 text-sm">
         <div className="flex gap-2 font-medium leading-none">
-          Calorie intake over the past week
+          Weight over the past week
         </div>
       </CardFooter>
     </Card>
